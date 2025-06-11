@@ -23,4 +23,18 @@ public class GerenciadorFinanceiro {
         Transacao transacaoAtualizada = TransacaoFactory.criarTransacao(nome, valor, tipoTransacao, data);
         cliente.atualizarTransacao(transacaoAtualizada);
     }
+
+    public void criarMeta(String nome, double valorAlvo, LocalDate data){
+        Meta novaMeta = new Meta(nome, valorAlvo, data);
+        cliente.adicionarMeta(novaMeta);
+    }
+
+    public void removerMeta(Meta meta){
+        cliente.removerMeta(meta);
+    }
+
+    public void atualizarMeta(String nome, double valorAlvo, double valorAtual, LocalDate data){
+        Meta meta = new Meta(nome, valorAlvo, valorAtual, data);
+        cliente.atualizarMeta(meta);
+    }
 }

@@ -1,6 +1,7 @@
 package planejadorfinanceiro;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Cliente {
     private String nome;
@@ -29,5 +30,23 @@ public class Cliente {
             }
         }
         transacoes.add(transacaoAtualizada);
+    }
+
+    public void adicionarMeta(Meta meta){
+        metas.add(meta);
+    }
+
+    public void removerMeta(Meta meta){
+        metas.remove(meta);
+    }
+
+    public void atualizarMeta(Meta metaAtualizada){
+        for (Meta meta : metas){
+            if (meta.getNome().equals(metaAtualizada.getNome())){
+                metas.remove(meta);
+                break;
+            }
+        }
+        metas.add(metaAtualizada);
     }
 }
