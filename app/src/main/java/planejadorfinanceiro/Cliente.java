@@ -24,7 +24,7 @@ public class Cliente {
 
     public void atualizarTransacao(Transacao transacaoAtualizada){
         for (Transacao transacao : transacoes){
-            if (transacao.getNome().equals(transacaoAtualizada.getNome())){
+            if (transacao.getId().equals(transacaoAtualizada.getId())){
                 transacoes.remove(transacao);
                 break;
             }
