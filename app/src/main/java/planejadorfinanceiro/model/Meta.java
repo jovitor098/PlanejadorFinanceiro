@@ -1,4 +1,4 @@
-package planejadorfinanceiro;
+package planejadorfinanceiro.model;
 
 import java.time.LocalDate;
 
@@ -8,7 +8,10 @@ public class Meta {
     private double valorAtual;
     private LocalDate prazoFinal;
 
-    
+    // Construtor padrão necessário para deserialização JSON
+    public Meta() {
+        valorAtual = 0;
+    }
 
     public Meta(String nome, double valorAlvo, LocalDate prazoFinal) {
         this.nome = nome;
@@ -36,7 +39,36 @@ public class Meta {
         return (valorAtual / valorAlvo) * 100;
     }
 
+    // Getters e Setters
     public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public double getValorAlvo() {
+        return valorAlvo;
+    }
+
+    public void setValorAlvo(double valorAlvo) {
+        this.valorAlvo = valorAlvo;
+    }
+
+    public double getValorAtual() {
+        return valorAtual;
+    }
+
+    public void setValorAtual(double valorAtual) {
+        this.valorAtual = valorAtual;
+    }
+
+    public LocalDate getPrazoFinal() {
+        return prazoFinal;
+    }
+
+    public void setPrazoFinal(LocalDate prazoFinal) {
+        this.prazoFinal = prazoFinal;
     }
 }

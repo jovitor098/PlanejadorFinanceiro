@@ -1,4 +1,4 @@
-package planejadorfinanceiro;
+package planejadorfinanceiro.model;
 
 import java.time.LocalDate;
 
@@ -36,5 +36,9 @@ public class GerenciadorFinanceiro {
     public void atualizarMeta(String nome, double valorAlvo, double valorAtual, LocalDate data){
         Meta meta = new Meta(nome, valorAlvo, valorAtual, data);
         cliente.atualizarMeta(meta);
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

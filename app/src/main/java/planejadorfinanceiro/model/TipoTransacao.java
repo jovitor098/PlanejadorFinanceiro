@@ -1,4 +1,4 @@
-package planejadorfinanceiro;
+package planejadorfinanceiro.model;
 
 public enum TipoTransacao {
     ENTRADA, SAIDA

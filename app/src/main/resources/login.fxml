@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns:fx="http://javafx.com/fxml" 
+          fx:controller="planejadorfinanceiro.LoginController" 
+          alignment="CENTER" hgap="10" vgap="10" 
+          style="-fx-padding: 20;">
+    <Label text="Usuário:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+    <TextField fx:id="usernameField" promptText="Digite seu usuário" 
+              GridPane.rowIndex="0" GridPane.columnIndex="1" />
+    
+    <Label text="Senha:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+    <PasswordField fx:id="passwordField" promptText="Digite sua senha" 
+                  GridPane.rowIndex="1" GridPane.columnIndex="1" />
+    
+    <HBox spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+        <Button text="Entrar" fx:id="loginButton" onAction="#handleLogin" />
+    </HBox>
+    
+    <HBox alignment="CENTER" GridPane.rowIndex="3" GridPane.columnIndex="0" 
+         GridPane.columnSpan="2" GridPane.halignment="CENTER" spacing="5">
+        <Label text="Não tem uma conta?" />
+        <Hyperlink text="Cadastre-se" fx:id="cadastroLink" onAction="#handleCadastro" />
+    </HBox>
+    
+    <Label fx:id="messageLabel" GridPane.rowIndex="4" GridPane.columnIndex="0" 
+          GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+</GridPane>

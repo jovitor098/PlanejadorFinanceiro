@@ -1,4 +1,4 @@
-package planejadorfinanceiro;
+package planejadorfinanceiro.model;
 
 import java.time.LocalDate;
 

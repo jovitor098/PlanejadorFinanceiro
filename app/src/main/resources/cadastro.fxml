@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="planejadorfinanceiro.CadastroController" 
+      alignment="CENTER" spacing="15" style="-fx-padding: 20;">
+    <Label text="Cadastro de Novo Usuário" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+    
+    <GridPane alignment="CENTER" hgap="10" vgap="10">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+        
+        <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+        <TextField fx:id="nomeField" promptText="Digite seu nome completo" 
+                  GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        
+        <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+        <TextField fx:id="emailField" promptText="Digite seu email" 
+                  GridPane.rowIndex="1" GridPane.columnIndex="1" />
+        
+        <Label text="Senha:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+        <PasswordField fx:id="senhaField" promptText="Digite sua senha" 
+                      GridPane.rowIndex="2" GridPane.columnIndex="1" />
+        
+        <Label text="Confirmar Senha:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <PasswordField fx:id="confirmarSenhaField" promptText="Confirme sua senha" 
+                      GridPane.rowIndex="3" GridPane.columnIndex="1" />
+    </GridPane>
+    
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Cadastrar" fx:id="cadastrarButton" onAction="#handleCadastrar"/>
+        <Button text="Voltar" fx:id="voltarButton" onAction="#handleVoltar"/>
+    </HBox>
+    
+    <Label fx:id="mensagemLabel" style="-fx-text-fill: red;"/>
+</VBox> 

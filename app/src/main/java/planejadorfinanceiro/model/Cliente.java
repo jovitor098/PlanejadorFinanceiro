@@ -1,0 +1,103 @@
+package planejadorfinanceiro.model;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.UUID;
+
+public class Cliente {
+    private String nome;
+    private String email;
+    private String senha;
+    private double saldo = 0;
+    private double entradaTotal = 0;
+    private double saidaTotal = 0;
+    private List<Transacao> transacoes = new ArrayList<>();
+    private List<Meta> metas = new ArrayList<>();
+
+    // Construtor padrão (sem argumentos) necessário para deserialização JSON
+    public Cliente() {
+        // Inicialização padrão
+        this.transacoes = new ArrayList<>();
+        this.metas = new ArrayList<>();
+    }
+
+    public Cliente(String nome, String email, String senha) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+    }
+
+    public void adicionarTransacao(Transacao transacao){
+        transacoes.add(transacao);
+    }
+
+    public void removerTransacao(Transacao transacao){
+        transacoes.remove(transacao);
+    }
+
+    public void atualizarTransacao(Transacao transacaoAtualizada){
+        for (Transacao transacao : transacoes){
+            if (transacao.getNome().equals(transacaoAtualizada.getNome())){
+                transacoes.remove(transacao);
+                break;
+            }
+        }
+        transacoes.add(transacaoAtualizada);
+    }
+
+    public void adicionarMeta(Meta meta){
+        metas.add(meta);
+    }
+
+    public void removerMeta(Meta meta){
+        metas.remove(meta);
+    }
+
+    public void atualizarMeta(Meta metaAtualizada){
+        for (Meta meta : metas){
+            if (meta.getNome().equals(metaAtualizada.getNome())){
+                metas.remove(meta);
+                break;
+            }
+        }
+        metas.add(metaAtualizada);
+    }
+
+    // Getters e Setters
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getSenha() {
+        return senha;
+    }
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    public double getSaldo() {
+        return saldo;
+    }
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+    public List<Transacao> getTransacoes() {
+        return transacoes;
+    }
+    public void setTransacoes(List<Transacao> transacoes) {
+        this.transacoes = transacoes;
+    }
+    public List<Meta> getMetas() {
+        return metas;
+    }
+    public void setMetas(List<Meta> metas) {
+        this.metas = metas;
+    }
+}
