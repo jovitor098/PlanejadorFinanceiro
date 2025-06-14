@@ -33,6 +33,8 @@ public class PerfilClienteController {
     private ComboBox<Integer> boxSelecionarAno;
     @FXML
     private TabelaTransacao tabelaTransacao;
+    @FXML
+    private Button todasTransacaoesButton;
 
     // Cliente atual que está logado
     private Cliente clienteLogado;
@@ -80,6 +82,11 @@ public class PerfilClienteController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void handleTodasTransacoes(){
+        // Muda para a tela de todas as trasacoes
     }
 
     @FXML
