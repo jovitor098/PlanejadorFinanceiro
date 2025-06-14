@@ -1,16 +1,26 @@
 package planejadorfinanceiro;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import planejadorfinanceiro.model.Cliente;
+import planejadorfinanceiro.model.GraficoSaldo;
+import planejadorfinanceiro.model.TipoTransacao;
+import planejadorfinanceiro.model.Transacao;
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class PerfilClienteController {
@@ -22,13 +32,18 @@ public class PerfilClienteController {
     private Label saldoLabel;
     @FXML
     private Button voltarButton;
-    
+    @FXML
+    private GraficoSaldo graficoSaldo;
+    @FXML
+    private ComboBox<Integer> boxSelecionarAno;
+
     // Cliente atual que está logado
     private Cliente clienteLogado;
     
     // Método para inicializar dados do cliente na tela
     public void inicializarDados(Cliente cliente) {
         this.clienteLogado = cliente;
+        graficoSaldo.setCliente(cliente);
         
         // Atualiza as labels com os dados do cliente
         nomeLabel.setText(cliente.getNome());
@@ -37,6 +52,15 @@ public class PerfilClienteController {
         // Formata o saldo como valor monetário
         NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         saldoLabel.setText(formatoMoeda.format(cliente.getSaldo()));
+
+        // Coloca as todos os anos que o cliente fez transação como opção para selecionar
+        boxSelecionarAno.getItems().setAll(clienteLogado.getAnosTransacoes());
+        Integer ultimoAno = boxSelecionarAno.getItems().getLast();
+        // Seleciona o último ano
+        if (ultimoAno != null){
+            boxSelecionarAno.setValue(ultimoAno);
+            graficoSaldo.atualizarAnoGrafico(2025);
+        }
     }
     
     @FXML
@@ -55,5 +79,12 @@ public class PerfilClienteController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void handleSelecionarAno(){
+        // Atualiza o gráfico para o ano selecionado
+        int anoSelecionado = boxSelecionarAno.getValue();
+        graficoSaldo.atualizarAnoGrafico(anoSelecionado);
     }
 } 
