@@ -9,10 +9,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import planejadorfinanceiro.model.Cliente;
+import planejadorfinanceiro.model.Transacao;
 import planejadorfinanceiro.ui.componentes.GraficoSaldo;
+import planejadorfinanceiro.ui.componentes.TabelaTransacao;
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 public class PerfilClienteController {
@@ -28,6 +31,8 @@ public class PerfilClienteController {
     private GraficoSaldo graficoSaldo;
     @FXML
     private ComboBox<Integer> boxSelecionarAno;
+    @FXML
+    private TabelaTransacao tabelaTransacao;
 
     // Cliente atual que está logado
     private Cliente clienteLogado;
@@ -53,6 +58,10 @@ public class PerfilClienteController {
             boxSelecionarAno.setValue(ultimoAno);
             graficoSaldo.atualizarAnoGrafico(2025);
         }
+
+        List<Transacao> transacoesCliente = cliente.getTransacoes();
+        // Mostra na tabela as ultimas 5 transacoes
+        tabelaTransacao.mostrarTransacoes(transacoesCliente.subList(Math.max(transacoesCliente.size() - 5, 0), transacoesCliente.size()));
     }
     
     @FXML
