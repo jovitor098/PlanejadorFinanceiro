@@ -1,26 +1,18 @@
 package planejadorfinanceiro;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import planejadorfinanceiro.model.Cliente;
-import planejadorfinanceiro.model.GraficoSaldo;
-import planejadorfinanceiro.model.TipoTransacao;
-import planejadorfinanceiro.model.Transacao;
+import planejadorfinanceiro.ui.componentes.GraficoSaldo;
 
 import java.io.IOException;
 import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class PerfilClienteController {

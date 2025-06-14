@@ -1,4 +1,4 @@
-package planejadorfinanceiro.model;
+package planejadorfinanceiro.ui.componentes;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -9,6 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import planejadorfinanceiro.model.Cliente;
+import planejadorfinanceiro.model.Transacao;
 
 public class GraficoSaldo extends LineChart<String, Number> {
     private Cliente cliente;
