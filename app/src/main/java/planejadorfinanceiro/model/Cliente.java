@@ -1,8 +1,6 @@
 package planejadorfinanceiro.model;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.*;
 
 public class Cliente {
     private String nome;
@@ -61,6 +59,14 @@ public class Cliente {
             }
         }
         metas.add(metaAtualizada);
+    }
+
+    public List<Integer> getAnosTransacoes(){
+        Set<Integer> anosTransacoes = new TreeSet<>();
+        for (Transacao transacao : transacoes){
+            anosTransacoes.add(transacao.getData().getYear());
+        }
+        return List.copyOf(anosTransacoes);
     }
 
     // Getters e Setters
