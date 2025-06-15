@@ -22,8 +22,10 @@ public class GraficoSaldo extends LineChart<String, Number> {
         CategoryAxis xAxis = (CategoryAxis) getXAxis();
         // Define o rótulo do eixo X como "Meses"
         xAxis.setLabel("Meses");
+
+        NumberAxis yAxis = ((NumberAxis) getYAxis());
         // Define o rótulo do eixo Y como "Saldo"
-        ((NumberAxis) getYAxis()).setLabel("Saldo");
+        yAxis.setLabel("Saldo (R$)");
 
         // Configura o eixo X com todos os meses
         configurarEixoXComTodosMeses(xAxis);
