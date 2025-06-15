@@ -86,7 +86,26 @@ public class PerfilClienteController {
 
     @FXML
     private void handleTodasTransacoes(){
-        // Muda para a tela de todas as trasacoes
+        try {
+            // Carrega a tela de transacoes
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/transacoes.fxml"));
+            Parent root = loader.load();
+
+            // Obtém o controller e passa os dados do cliente
+            TransacoesController controller = loader.getController();
+            controller.inicializarDados(clienteLogado.getTransacoes());
+
+            Scene scene = new Scene(root);
+
+            // Obtém o palco (stage) atual e muda a cena
+            Stage stage = (Stage) todasTransacaoesButton.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Transações");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
