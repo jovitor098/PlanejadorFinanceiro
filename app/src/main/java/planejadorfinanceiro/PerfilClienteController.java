@@ -93,7 +93,7 @@ public class PerfilClienteController {
 
             // Obtém o controller e passa os dados do cliente
             TransacoesController controller = loader.getController();
-            controller.inicializarDados(clienteLogado.getTransacoes());
+            controller.inicializarDados(clienteLogado);
 
             Scene scene = new Scene(root);
 

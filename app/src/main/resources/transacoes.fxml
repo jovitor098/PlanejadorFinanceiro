@@ -13,5 +13,8 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
         </TabelaTransacao>
+        <HBox alignment="CENTER" spacing="10">
+            <Button fx:id="voltarButton" onAction="#handleVoltar" text="Voltar" />
+        </HBox>
     </VBox>
 </ScrollPane>
