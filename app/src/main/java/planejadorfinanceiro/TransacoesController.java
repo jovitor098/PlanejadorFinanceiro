@@ -7,19 +7,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import planejadorfinanceiro.model.Cliente;
 import planejadorfinanceiro.model.TipoTransacao;
 import planejadorfinanceiro.model.Transacao;
+import planejadorfinanceiro.ui.componentes.ResultadoTransacaoDialogo;
 import planejadorfinanceiro.ui.componentes.TabelaTransacao;
+import planejadorfinanceiro.ui.componentes.TransacaoDialogo;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class TransacoesController {
     @FXML
@@ -37,15 +37,37 @@ public class TransacoesController {
     @FXML
     private DatePicker dataFimPicker;
     @FXML
-    private Cliente clienteLogado;
-    @FXML
     private TabelaTransacao tabelaTransacao;
     @FXML
     public Button voltarButton;
 
+    private Cliente clienteLogado;
+
     public void inicializarDados(Cliente cliente) {
         clienteLogado = cliente;
+        tabelaTransacao.setRowFactory(tv -> {
+            TableRow<Transacao> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getClickCount() == 2) {
+                    Transacao transacaoSelecionada = row.getItem();
+                    abrirInformacoesTransacao(transacaoSelecionada);
+                }
+            });
+            return row;
+        });
         tabelaTransacao.mostrarTransacoes(clienteLogado.getTransacoes());
+    }
+
+    private void abrirInformacoesTransacao(Transacao transacao){
+        TransacaoDialogo dialogo = new TransacaoDialogo();
+        dialogo.montarDialogo();
+        Optional<ResultadoTransacaoDialogo> resultado = dialogo.showAndWait();
+
+        if (resultado.isPresent()){
+            if (resultado.get().getButtonType() == ButtonBar.ButtonData.OK_DONE){
+
+            }
+        }
     }
 
     @FXML
