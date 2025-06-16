@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="planejadorfinanceiro.MetasController">
+
+    <VBox spacing="10" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+
+        <Label text="Metas Financeiras" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+        <TableView fx:id="tabelaMetas" prefHeight="300">
+            <columns>
+                <TableColumn fx:id="colunaNome" text="Nome" prefWidth="150"/>
+                <TableColumn fx:id="colunaValorAlvo" text="Valor Alvo (R$)" prefWidth="100"/>
+                <TableColumn fx:id="colunaValorAtual" text="Valor Atual (R$)" prefWidth="100"/>
+                <TableColumn fx:id="colunaProgresso" text="Progresso (%)" prefWidth="100"/>
+                <TableColumn fx:id="colunaPrazo" text="Prazo Final" prefWidth="120"/>
+            </columns>
+        </TableView>
+    </VBox>
+</AnchorPane>

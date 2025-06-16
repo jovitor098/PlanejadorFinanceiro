@@ -87,7 +87,7 @@ public class CadastroController {
     private void handleVoltar() {
         try {
             // Carrega a tela de login
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
 
