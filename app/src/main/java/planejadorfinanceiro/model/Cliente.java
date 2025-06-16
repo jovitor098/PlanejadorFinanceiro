@@ -69,6 +69,17 @@ public class Cliente {
         return List.copyOf(anosTransacoes);
     }
 
+    private void atualizarSaldos(Transacao transacao, boolean adicionar){
+        double valor = transacao.getValor();
+        if (transacao.getTipo() == TipoTransacao.ENTRADA) {
+            entradaTotal += adicionar ? valor : -valor;
+            saldo += adicionar ? valor : -valor;
+        } else {
+            saidaTotal += adicionar ? valor : -valor;
+            saldo += adicionar ? -valor : valor;
+        }
+    }
+
     // Getters e Setters
 
     public double getEntradaTotal() {
