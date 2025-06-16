@@ -1,6 +1,7 @@
 package planejadorfinanceiro.ui.componentes;
 
 import javafx.collections.FXCollections;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -8,6 +9,7 @@ import planejadorfinanceiro.model.TipoTransacao;
 import planejadorfinanceiro.model.Transacao;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class TabelaTransacao extends TableView<Transacao> {
@@ -28,6 +30,19 @@ public class TabelaTransacao extends TableView<Transacao> {
 
         TableColumn<Transacao, LocalDate> colunaData = new TableColumn<>("Data");
         colunaData.setCellValueFactory(new PropertyValueFactory<>("data"));
+
+        // Formata a data para dd/MM/yyyy
+        colunaData.setCellFactory(coluna -> new TableCell<>(){
+            @Override
+            protected void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                }
+            }
+        });
 
         // Adicionar as colunas à tabela
         getColumns().setAll(colunaNome, colunaValor, colunaTipo, colunaData);
