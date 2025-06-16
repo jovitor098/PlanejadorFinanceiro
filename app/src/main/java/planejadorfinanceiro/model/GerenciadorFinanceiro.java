@@ -1,6 +1,7 @@
 package planejadorfinanceiro.model;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class GerenciadorFinanceiro {
     private Cliente cliente;
@@ -19,9 +20,13 @@ public class GerenciadorFinanceiro {
         cliente.removerTransacao(transacao);
     }
 
-    public void atualizarTransacao(String nome, double valor, TipoTransacao tipoTransacao, LocalDate data){
-        Transacao transacaoAtualizada = TransacaoFactory.criarTransacao(nome, valor, tipoTransacao, data);
-        cliente.atualizarTransacao(transacaoAtualizada);
+    public void atualizarTransacao(UUID transacaoId, String nome, double valor, TipoTransacao tipoTransacao, LocalDate data){
+        Transacao transacaoAntiga = encontrarTransacaoPorId(transacaoId);
+        if (transacaoAntiga != null) {
+            Transacao transacaoAtualizada = new Transacao(valor, nome, tipoTransacao, data);
+            transacaoAtualizada.setId(transacaoId); // Mantém o ID original
+            cliente.atualizarTransacao(transacaoAtualizada);
+        }
     }
 
     public void criarMeta(String nome, double valorAlvo, LocalDate data){
@@ -33,12 +38,33 @@ public class GerenciadorFinanceiro {
         cliente.removerMeta(meta);
     }
 
-    public void atualizarMeta(String nome, double valorAlvo, double valorAtual, LocalDate data){
-        Meta meta = new Meta(nome, valorAlvo, valorAtual, data);
-        cliente.atualizarMeta(meta);
+    public void atualizarMeta(UUID metaId, String nome, double valorAlvo, double valorAtual, LocalDate data){
+        Meta metaAntiga = encontrarMetaPorId(metaId);
+        if (metaAntiga != null) {
+            Meta metaAtualizada = new Meta(nome, valorAlvo, valorAtual, data);
+            metaAtualizada.setId(metaId); // Mantém o ID original
+            cliente.atualizarMeta(metaAtualizada);
+        }
     }
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    // Métodos auxiliares
+    private Transacao encontrarTransacaoPorId(UUID id) {
+        return cliente.getTransacoes()
+                      .stream()
+                      .filter(t -> t.getId().equals(id))
+                      .findFirst()
+                      .orElse(null);
+    }
+
+    private Meta encontrarMetaPorId(UUID id) {
+        return cliente.getMetas()
+                      .stream()
+                      .filter(m -> m.getId().equals(id))
+                      .findFirst()
+                      .orElse(null);
     }
 }
