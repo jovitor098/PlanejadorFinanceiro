@@ -27,10 +27,13 @@ public class Cliente {
 
     public void adicionarTransacao(Transacao transacao){
         transacoes.add(transacao);
+        atualizarSaldos(transacao, true);
     }
 
     public void removerTransacao(Transacao transacao){
-        transacoes.remove(transacao);
+        if (transacoes.removeIf(t -> t.getId().equals(transacao.getId()))) {
+            atualizarSaldos(transacao, false);
+        }
     }
 
     public void atualizarTransacao(Transacao transacaoAtualizada){
