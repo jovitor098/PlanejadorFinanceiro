@@ -5,6 +5,18 @@ import java.util.UUID;
 
 public class GerenciadorFinanceiro {
     private Cliente cliente;
+    private static GerenciadorFinanceiro instancia;
+
+    private GerenciadorFinanceiro(){
+
+    }
+
+    public static GerenciadorFinanceiro getInstancia(){
+        if (instancia == null){
+            instancia = new GerenciadorFinanceiro();
+        }
+        return instancia;
+    }
 
     public void criarTransacaoEntrada(String nome, double valor, LocalDate data){
         Transacao novaTransacao = TransacaoFactory.criarEntrada(nome, valor, data);
