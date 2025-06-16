@@ -70,6 +70,13 @@ public class Cliente {
     }
 
     // Getters e Setters
+
+    public double getEntradaTotal() {
+        return entradaTotal;
+    }
+    public double getSaidaTotal() {
+        return saidaTotal;
+    }
     public String getNome() {
         return nome;
     }
