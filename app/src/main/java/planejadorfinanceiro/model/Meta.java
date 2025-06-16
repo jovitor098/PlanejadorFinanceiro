@@ -1,8 +1,11 @@
 package planejadorfinanceiro.model;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class Meta {
+
+    private UUID id;
     private String nome;
     private double valorAlvo;
     private double valorAtual;
@@ -10,10 +13,12 @@ public class Meta {
 
     // Construtor padrão necessário para deserialização JSON
     public Meta() {
+        this.id = UUID.randomUUID();
         valorAtual = 0;
     }
 
     public Meta(String nome, double valorAlvo, LocalDate prazoFinal) {
+        this.id = UUID.randomUUID();
         this.nome = nome;
         this.valorAlvo = valorAlvo;
         this.prazoFinal = prazoFinal;
@@ -21,6 +26,7 @@ public class Meta {
     }
 
     public Meta(String nome, double valorAlvo, double valorAtual, LocalDate prazoFinal) {
+        this.id = UUID.randomUUID();
         this.nome = nome;
         this.valorAlvo = valorAlvo;
         this.valorAtual = valorAtual;
@@ -40,6 +46,10 @@ public class Meta {
     }
 
     // Getters e Setters
+    public UUID getId() {
+        return id;
+    }
+
     public String getNome() {
         return nome;
     }
