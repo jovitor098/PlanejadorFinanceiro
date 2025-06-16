@@ -51,17 +51,16 @@ public class Cliente {
     }
 
     public void removerMeta(Meta meta){
-        metas.remove(meta);
+        metas.removeIf(m -> m.getId().equals(meta.getId()));
     }
 
     public void atualizarMeta(Meta metaAtualizada){
-        for (Meta meta : metas){
-            if (meta.getNome().equals(metaAtualizada.getNome())){
-                metas.remove(meta);
-                break;
+        for (int i = 0; i < metas.size(); i++) {
+            if (metas.get(i).getId().equals(metaAtualizada.getId())) {
+                metas.set(i, metaAtualizada);
+                return;
             }
         }
-        metas.add(metaAtualizada);
     }
 
     public List<Integer> getAnosTransacoes(){
