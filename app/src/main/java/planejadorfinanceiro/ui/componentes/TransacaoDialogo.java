@@ -58,7 +58,9 @@ public class TransacaoDialogo extends Dialog<ResultadoTransacaoDialogo> {
         getDialogPane().setContent(grid);
 
         // Botões
-        getDialogPane().getButtonTypes().addAll(salvarButtonType);
+        getDialogPane().getButtonTypes().addAll(salvarButtonType,ButtonType.CLOSE);
+
+        setTitle("Criar transação");
     }
 
     public void montarDialogo(Transacao transacaoEditar) {
@@ -69,8 +71,9 @@ public class TransacaoDialogo extends Dialog<ResultadoTransacaoDialogo> {
         campoNome.setText(transacaoEditar.getNome());
         campoValor.setText(String.valueOf(transacaoEditar.getValor()));
         campoData.setValue(transacaoEditar.getData());
-        campoTipo.getItems().addAll(TipoTransacao.values());
         campoTipo.setValue(transacaoEditar.getTipo());
+
+        setTitle("Editar transação");
     }
 
     private Transacao criarTransacaoDoDialogo() {
