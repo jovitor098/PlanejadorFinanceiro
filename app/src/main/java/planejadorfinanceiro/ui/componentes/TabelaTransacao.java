@@ -51,6 +51,7 @@ public class TabelaTransacao extends TableView<Transacao> {
 
     public void mostrarTransacoes(List<Transacao> transacoes){
         setItems(FXCollections.observableList(transacoes));
+        refresh();
         // Aplica o tamanho correto da tabela
         setMinHeight(transacoes.size() * getFixedCellSize() + ALTURA_CABECALHO);
         setMaxHeight(getMinHeight());
