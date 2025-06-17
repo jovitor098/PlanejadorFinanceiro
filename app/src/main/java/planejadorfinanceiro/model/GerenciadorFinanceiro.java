@@ -35,9 +35,10 @@ public class GerenciadorFinanceiro {
     public void atualizarTransacao(UUID transacaoId, String nome, double valor, TipoTransacao tipoTransacao, LocalDate data){
         Transacao transacaoAntiga = encontrarTransacaoPorId(transacaoId);
         if (transacaoAntiga != null) {
-            Transacao transacaoAtualizada = new Transacao(valor, nome, tipoTransacao, data);
-            transacaoAtualizada.setId(transacaoId); // Mantém o ID original
-            cliente.atualizarTransacao(transacaoAtualizada);
+            transacaoAntiga.setNome(nome);
+            transacaoAntiga.setValor(valor);
+            transacaoAntiga.setTipo(tipoTransacao);
+            transacaoAntiga.setData(data);
         }
     }
 
@@ -78,5 +79,9 @@ public class GerenciadorFinanceiro {
                       .filter(m -> m.getId().equals(id))
                       .findFirst()
                       .orElse(null);
+    }
+
+    public Cliente getCliente(){
+        return cliente;
     }
 }
