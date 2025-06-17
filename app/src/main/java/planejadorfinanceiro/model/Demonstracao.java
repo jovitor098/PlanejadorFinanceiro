@@ -10,7 +10,7 @@ public class Demonstracao {
         Cliente cliente = new Cliente("joao", "joao@email.com", "123");
 
         // Criando o gerenciador
-        GerenciadorFinanceiro gerenciador = new GerenciadorFinanceiro();
+        GerenciadorFinanceiro gerenciador = GerenciadorFinanceiro.getInstancia();
         gerenciador.setCliente(cliente);
 
         // Adicionando uma transação de entrada
