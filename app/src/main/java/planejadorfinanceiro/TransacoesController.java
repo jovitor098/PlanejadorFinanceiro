@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import planejadorfinanceiro.model.Cliente;
+import planejadorfinanceiro.model.GerenciadorFinanceiro;
 import planejadorfinanceiro.model.TipoTransacao;
 import planejadorfinanceiro.model.Transacao;
 import planejadorfinanceiro.ui.componentes.ResultadoTransacaoDialogo;
@@ -41,10 +42,10 @@ public class TransacoesController {
     @FXML
     public Button voltarButton;
 
-    private Cliente clienteLogado;
+    private GerenciadorFinanceiro gerenciador;
 
-    public void inicializarDados(Cliente cliente) {
-        clienteLogado = cliente;
+    public void initialize() {
+        gerenciador = GerenciadorFinanceiro.getInstancia();
         tabelaTransacao.setRowFactory(tv -> {
             TableRow<Transacao> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -55,18 +56,31 @@ public class TransacoesController {
             });
             return row;
         });
-        tabelaTransacao.mostrarTransacoes(clienteLogado.getTransacoes());
+        tabelaTransacao.mostrarTransacoes(gerenciador.getCliente().getTransacoes());
     }
 
     private void abrirInformacoesTransacao(Transacao transacao){
         TransacaoDialogo dialogo = new TransacaoDialogo();
-        dialogo.montarDialogo();
+        dialogo.montarDialogo(transacao);
         Optional<ResultadoTransacaoDialogo> resultado = dialogo.showAndWait();
 
         if (resultado.isPresent()){
+            // Se o botão foi o de salvar, então atualiza a transacao
             if (resultado.get().getButtonType() == ButtonBar.ButtonData.OK_DONE){
-
+                Transacao transacaoAtualizada = resultado.get().getTransacao();
+                gerenciador.atualizarTransacao(transacao.getId(),
+                        transacaoAtualizada.getNome(),
+                        transacaoAtualizada.getValor(),
+                        transacaoAtualizada.getTipo(),
+                        transacaoAtualizada.getData());
             }
+            // Se foi o de excluir, remove a transacao
+            else if (resultado.get().getButtonType() == ButtonBar.ButtonData.LEFT){
+                gerenciador.removerTransacao(transacao);
+            }
+
+            // Atualiza a tabela
+            tabelaTransacao.mostrarTransacoes(gerenciador.getCliente().getTransacoes());
         }
     }
 
@@ -78,13 +92,13 @@ public class TransacoesController {
             Parent root = loader.load();
 
             PerfilClienteController controller = loader.getController();
-            controller.inicializarDados(clienteLogado);
+            controller.inicializarDados(gerenciador.getCliente());
             Scene scene = new Scene(root);
 
             // Obtém o palco (stage) atual e muda a cena
             Stage stage = (Stage) voltarButton.getScene().getWindow();
             stage.setScene(scene);
-            stage.setTitle("Perfil do Cliente - " + clienteLogado.getNome());
+            stage.setTitle("Perfil do Cliente - " + gerenciador.getCliente().getNome());
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -93,7 +107,7 @@ public class TransacoesController {
 
     @FXML
     private void handleFiltrar() {
-        List<Transacao> listaFiltrada = clienteLogado.getTransacoes().stream().filter(transacao -> {
+        List<Transacao> listaFiltrada = gerenciador.getCliente().getTransacoes().stream().filter(transacao -> {
             // Verifica nome
             String nomeFiltro = nomeTextField.getText();
             if (nomeFiltro != null && !transacao.getNome().toLowerCase().contains(nomeFiltro.toLowerCase())) {
