@@ -91,10 +91,6 @@ public class PerfilClienteController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/transacoes.fxml"));
             Parent root = loader.load();
 
-            // Obtém o controller e passa os dados do cliente
-            TransacoesController controller = loader.getController();
-            controller.inicializarDados(clienteLogado);
-
             Scene scene = new Scene(root);
 
             // Obtém o palco (stage) atual e muda a cena
