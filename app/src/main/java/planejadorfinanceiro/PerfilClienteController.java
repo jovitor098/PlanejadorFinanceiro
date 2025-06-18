@@ -15,6 +15,7 @@ import planejadorfinanceiro.ui.componentes.TabelaTransacao;
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,12 +55,16 @@ public class PerfilClienteController {
 
         // Coloca as todos os anos que o cliente fez transação como opção para selecionar
         boxSelecionarAno.getItems().setAll(clienteLogado.getAnosTransacoes());
-        Integer ultimoAno = boxSelecionarAno.getItems().getLast();
-        // Seleciona o último ano
-        if (ultimoAno != null){
-            boxSelecionarAno.setValue(ultimoAno);
-            graficoSaldo.atualizarAnoGrafico(2025);
+
+        if (boxSelecionarAno.getItems().size() > 0){
+            Integer ultimoAno = boxSelecionarAno.getItems().getLast();
+            // Seleciona o último ano
+            if (ultimoAno != null){
+                boxSelecionarAno.setValue(ultimoAno);
+                graficoSaldo.atualizarAnoGrafico(2025);
         }
+        }
+       
 
         List<Transacao> transacoesCliente = cliente.getTransacoes();
         // Mostra na tabela as ultimas 5 transacoes
