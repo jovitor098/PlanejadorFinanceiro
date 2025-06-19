@@ -1,5 +1,7 @@
 package planejadorfinanceiro.model;
 
+import planejadorfinanceiro.service.ClienteService;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -23,15 +25,18 @@ public class GerenciadorFinanceiro {
     public void criarTransacaoEntrada(String nome, double valor, LocalDate data){
         Transacao novaTransacao = TransacaoFactory.criarEntrada(nome, valor, data);
         clienteLogado.adicionarTransacao(novaTransacao);
+        ClienteService.salvarClientes(clientes);
     }
 
     public void criarTransacaoSaida(String nome, double valor, LocalDate data){
         Transacao novaTransacao = TransacaoFactory.criarSaida(nome, valor, data);
         clienteLogado.adicionarTransacao(novaTransacao);
+        ClienteService.salvarClientes(clientes);
     }
 
     public void removerTransacao(Transacao transacao){
         clienteLogado.removerTransacao(transacao);
+        ClienteService.salvarClientes(clientes);
     }
 
     public void atualizarTransacao(UUID transacaoId, String nome, double valor, TipoTransacao tipoTransacao, LocalDate data){
@@ -42,15 +47,18 @@ public class GerenciadorFinanceiro {
             transacaoAntiga.setTipo(tipoTransacao);
             transacaoAntiga.setData(data);
         }
+        ClienteService.salvarClientes(clientes);
     }
 
     public void criarMeta(String nome, double valorAlvo, LocalDate data){
         Meta novaMeta = new Meta(nome, valorAlvo, data);
         clienteLogado.adicionarMeta(novaMeta);
+        ClienteService.salvarClientes(clientes);
     }
 
     public void removerMeta(Meta meta){
         clienteLogado.removerMeta(meta);
+        ClienteService.salvarClientes(clientes);
     }
 
     public void atualizarMeta(UUID metaId, String nome, double valorAlvo, double valorAtual, LocalDate data){
