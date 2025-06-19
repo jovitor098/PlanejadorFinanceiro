@@ -15,7 +15,6 @@ import planejadorfinanceiro.ui.componentes.TabelaTransacao;
 
 import java.io.IOException;
 import java.text.NumberFormat;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,7 +53,7 @@ public class PerfilClienteController {
         saldoLabel.setText(formatoMoeda.format(cliente.getSaldo()));
 
         // Coloca as todos os anos que o cliente fez transação como opção para selecionar
-        boxSelecionarAno.getItems().setAll(clienteLogado.getAnosTransacoes());
+        boxSelecionarAno.getItems().setAll(clienteLogado.obterAnosTransacoes());
 
         if (boxSelecionarAno.getItems().size() > 0){
             Integer ultimoAno = boxSelecionarAno.getItems().getLast();

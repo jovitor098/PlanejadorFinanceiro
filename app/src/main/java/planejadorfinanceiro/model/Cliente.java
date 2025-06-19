@@ -63,7 +63,7 @@ public class Cliente {
         }
     }
 
-    public List<Integer> getAnosTransacoes(){
+    public List<Integer> obterAnosTransacoes(){
         Set<Integer> anosTransacoes = new TreeSet<>();
         for (Transacao transacao : transacoes){
             anosTransacoes.add(transacao.getData().getYear());
