@@ -13,8 +13,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class TabelaTransacao extends TableView<Transacao> {
-    private final static int ALTURA_LINHA = 25;
-    private final static int ALTURA_CABECALHO = 28;
+    private final static int ALTURA_LINHA = 42;
+    private final static int ALTURA_CABECALHO = 50;
 
     public TabelaTransacao() {
         super();
@@ -44,16 +44,41 @@ public class TabelaTransacao extends TableView<Transacao> {
             }
         });
 
+        // Formata o valor para verde se entrada, vermelho caso seja saída
+        colunaValor.setCellFactory(coluna -> new TableCell<>(){
+                @Override
+                protected void updateItem(Double valor, boolean empty){
+                    super.updateItem(valor, empty);
+                    if (empty || valor == null){
+                        setText(null);
+                        setStyle("");
+                    }
+                    else {
+                        Transacao transacaoFormatar = getTableView().getItems().get(getIndex());
+                        setText(String.format("R$ %.2f", valor));
+                        if (transacaoFormatar.getTipo() == TipoTransacao.ENTRADA) {
+                            setStyle("-fx-text-fill: green;");
+                        } else if (transacaoFormatar.getTipo() == TipoTransacao.SAIDA) {
+                            setStyle("-fx-text-fill: red;");
+                        } else {
+                            setStyle("");
+                        }
+                    }
+                }
+        });
+
         // Adicionar as colunas à tabela
         getColumns().setAll(colunaNome, colunaValor, colunaTipo, colunaData);
+
         setFixedCellSize(ALTURA_LINHA);
+        getStylesheets().add(getClass().getResource("/tabelaTransacaoStyle.css").toExternalForm());
     }
 
     public void mostrarTransacoes(List<Transacao> transacoes){
         setItems(FXCollections.observableList(transacoes));
         refresh();
         // Aplica o tamanho correto da tabela
-        setMinHeight(transacoes.size() * getFixedCellSize() + ALTURA_CABECALHO);
+        setMinHeight(transacoes.size() * ALTURA_LINHA + ALTURA_CABECALHO);
         setMaxHeight(getMinHeight());
     }
 }

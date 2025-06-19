@@ -1,0 +1,40 @@
+.table-view {
+    -fx-background-color: #f9f9f9;
+    -fx-table-cell-border-color: transparent;
+    -fx-padding: 10;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.table-view .column-header {
+    -fx-background-color: #f0f0f0;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #333;
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.table-row-cell:filled:selected {
+      -fx-background-color: #3399FF;
+       -fx-text-fill: black;
+}
+
+.table-cell {
+    -fx-padding: 8px;
+    -fx-font-size: 13px;
+}
+
+.table-cell:focused {
+    -fx-background-color: transparent;
+}
+.table-view .placeholder {
+    -fx-background-color: transparent;
+}
