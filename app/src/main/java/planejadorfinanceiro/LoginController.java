@@ -57,7 +57,8 @@ public class LoginController {
             System.out.println("Login bem-sucedido para: " + cliente.getNome());
             messageLabel.setText("Login realizado com sucesso!");
             messageLabel.setStyle("-fx-text-fill: green;");
-            GerenciadorFinanceiro.getInstancia().setCliente(cliente);
+            GerenciadorFinanceiro.getInstancia().setClienteLogado(cliente);
+            GerenciadorFinanceiro.getInstancia().setClientes(clientes);
             abrirTelaPerfil(cliente);
         } else {
             // Manter compatibilidade com o login hardcoded existente
@@ -69,7 +70,8 @@ public class LoginController {
                 
                 messageLabel.setText("Login de administrador realizado com sucesso!");
                 messageLabel.setStyle("-fx-text-fill: green;");
-                GerenciadorFinanceiro.getInstancia().setCliente(adminCliente);
+                GerenciadorFinanceiro.getInstancia().setClienteLogado(adminCliente);
+                GerenciadorFinanceiro.getInstancia().setClientes(clientes);
                 abrirTelaPerfil(adminCliente);
             } else {
                 System.out.println("Falha no login: credenciais inválidas");

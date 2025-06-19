@@ -11,7 +11,7 @@ public class Demonstracao {
 
         // Criando o gerenciador
         GerenciadorFinanceiro gerenciador = GerenciadorFinanceiro.getInstancia();
-        gerenciador.setCliente(cliente);
+        gerenciador.setClienteLogado(cliente);
 
         // Adicionando uma transação de entrada
         gerenciador.criarTransacaoEntrada("Salário", 3000.0, LocalDate.now());

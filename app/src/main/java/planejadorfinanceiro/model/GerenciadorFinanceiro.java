@@ -1,10 +1,12 @@
 package planejadorfinanceiro.model;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public class GerenciadorFinanceiro {
-    private Cliente cliente;
+    private Cliente clienteLogado;
+    private List<Cliente> clientes;
     private static GerenciadorFinanceiro instancia;
 
     private GerenciadorFinanceiro(){
@@ -20,16 +22,16 @@ public class GerenciadorFinanceiro {
 
     public void criarTransacaoEntrada(String nome, double valor, LocalDate data){
         Transacao novaTransacao = TransacaoFactory.criarEntrada(nome, valor, data);
-        cliente.adicionarTransacao(novaTransacao);
+        clienteLogado.adicionarTransacao(novaTransacao);
     }
 
     public void criarTransacaoSaida(String nome, double valor, LocalDate data){
         Transacao novaTransacao = TransacaoFactory.criarSaida(nome, valor, data);
-        cliente.adicionarTransacao(novaTransacao);
+        clienteLogado.adicionarTransacao(novaTransacao);
     }
 
     public void removerTransacao(Transacao transacao){
-        cliente.removerTransacao(transacao);
+        clienteLogado.removerTransacao(transacao);
     }
 
     public void atualizarTransacao(UUID transacaoId, String nome, double valor, TipoTransacao tipoTransacao, LocalDate data){
@@ -44,11 +46,11 @@ public class GerenciadorFinanceiro {
 
     public void criarMeta(String nome, double valorAlvo, LocalDate data){
         Meta novaMeta = new Meta(nome, valorAlvo, data);
-        cliente.adicionarMeta(novaMeta);
+        clienteLogado.adicionarMeta(novaMeta);
     }
 
     public void removerMeta(Meta meta){
-        cliente.removerMeta(meta);
+        clienteLogado.removerMeta(meta);
     }
 
     public void atualizarMeta(UUID metaId, String nome, double valorAlvo, double valorAtual, LocalDate data){
@@ -56,17 +58,17 @@ public class GerenciadorFinanceiro {
         if (metaAntiga != null) {
             Meta metaAtualizada = new Meta(nome, valorAlvo, valorAtual, data);
             metaAtualizada.setId(metaId); // Mantém o ID original
-            cliente.atualizarMeta(metaAtualizada);
+            clienteLogado.atualizarMeta(metaAtualizada);
         }
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setClienteLogado(Cliente cliente) {
+        this.clienteLogado = cliente;
     }
 
     // Métodos auxiliares
     private Transacao encontrarTransacaoPorId(UUID id) {
-        return cliente.getTransacoes()
+        return clienteLogado.getTransacoes()
                       .stream()
                       .filter(t -> t.getId().equals(id))
                       .findFirst()
@@ -74,14 +76,18 @@ public class GerenciadorFinanceiro {
     }
 
     private Meta encontrarMetaPorId(UUID id) {
-        return cliente.getMetas()
+        return clienteLogado.getMetas()
                       .stream()
                       .filter(m -> m.getId().equals(id))
                       .findFirst()
                       .orElse(null);
     }
 
-    public Cliente getCliente(){
-        return cliente;
+    public Cliente getClienteLogado(){
+        return clienteLogado;
+    }
+
+    public void setClientes(List<Cliente> clientes){
+        this.clientes = clientes;
     }
 }

@@ -1,15 +1,11 @@
 package planejadorfinanceiro;
 
-import javafx.collections.FXCollections;
-import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import planejadorfinanceiro.model.Cliente;
 import planejadorfinanceiro.model.GerenciadorFinanceiro;
 import planejadorfinanceiro.model.TipoTransacao;
 import planejadorfinanceiro.model.Transacao;
@@ -56,7 +52,7 @@ public class TransacoesController {
             });
             return row;
         });
-        tabelaTransacao.mostrarTransacoes(gerenciador.getCliente().getTransacoes());
+        tabelaTransacao.mostrarTransacoes(gerenciador.getClienteLogado().getTransacoes());
     }
 
     private void abrirInformacoesTransacao(Transacao transacao){
@@ -80,7 +76,7 @@ public class TransacoesController {
             }
 
             // Atualiza a tabela
-            tabelaTransacao.mostrarTransacoes(gerenciador.getCliente().getTransacoes());
+            tabelaTransacao.mostrarTransacoes(gerenciador.getClienteLogado().getTransacoes());
         }
     }
 
@@ -92,13 +88,13 @@ public class TransacoesController {
             Parent root = loader.load();
 
             PerfilClienteController controller = loader.getController();
-            controller.inicializarDados(gerenciador.getCliente());
+            controller.inicializarDados(gerenciador.getClienteLogado());
             Scene scene = new Scene(root);
 
             // Obtém o palco (stage) atual e muda a cena
             Stage stage = (Stage) voltarButton.getScene().getWindow();
             stage.setScene(scene);
-            stage.setTitle("Perfil do Cliente - " + gerenciador.getCliente().getNome());
+            stage.setTitle("Perfil do Cliente - " + gerenciador.getClienteLogado().getNome());
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,7 +103,7 @@ public class TransacoesController {
 
     @FXML
     private void handleFiltrar() {
-        List<Transacao> listaFiltrada = gerenciador.getCliente().getTransacoes().stream().filter(transacao -> {
+        List<Transacao> listaFiltrada = gerenciador.getClienteLogado().getTransacoes().stream().filter(transacao -> {
             // Verifica nome
             String nomeFiltro = nomeTextField.getText();
             if (nomeFiltro != null && !transacao.getNome().toLowerCase().contains(nomeFiltro.toLowerCase())) {
