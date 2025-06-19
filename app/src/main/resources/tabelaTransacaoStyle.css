@@ -35,6 +35,3 @@
 .table-cell:focused {
     -fx-background-color: transparent;
 }
-.table-view .placeholder {
-    -fx-background-color: transparent;
-}

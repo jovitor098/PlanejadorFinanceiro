@@ -78,7 +78,14 @@ public class TabelaTransacao extends TableView<Transacao> {
         setItems(FXCollections.observableList(transacoes));
         refresh();
         // Aplica o tamanho correto da tabela
-        setMinHeight(transacoes.size() * ALTURA_LINHA + ALTURA_CABECALHO);
+        // Caso tenha transações
+        if (transacoes.size() > 0){
+            setMinHeight(transacoes.size() * ALTURA_LINHA + ALTURA_CABECALHO);
+        }
+        // Caso contrário coloca uma linha
+        else {
+            setMinHeight(ALTURA_LINHA + ALTURA_CABECALHO);
+        }
         setMaxHeight(getMinHeight());
     }
 }
