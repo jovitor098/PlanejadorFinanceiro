@@ -37,13 +37,12 @@ public class Cliente {
     }
 
     public void atualizarTransacao(Transacao transacaoAtualizada){
-        for (Transacao transacao : transacoes){
-            if (transacao.getNome().equals(transacaoAtualizada.getNome())){
-                transacoes.remove(transacao);
-                break;
+        for (int i = 0; i < transacoes.size(); i++){
+            if (transacoes.get(i).getId().equals(transacaoAtualizada.getId())){
+                transacoes.set(i, transacaoAtualizada);
+                return;
             }
         }
-        transacoes.add(transacaoAtualizada);
     }
 
     public void adicionarMeta(Meta meta){

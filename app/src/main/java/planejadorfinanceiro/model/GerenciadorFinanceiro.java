@@ -42,10 +42,9 @@ public class GerenciadorFinanceiro {
     public void atualizarTransacao(UUID transacaoId, String nome, double valor, TipoTransacao tipoTransacao, LocalDate data){
         Transacao transacaoAntiga = encontrarTransacaoPorId(transacaoId);
         if (transacaoAntiga != null) {
-            transacaoAntiga.setNome(nome);
-            transacaoAntiga.setValor(valor);
-            transacaoAntiga.setTipo(tipoTransacao);
-            transacaoAntiga.setData(data);
+            Transacao transacaoAtualizada = TransacaoFactory.criarTransacao(nome, valor, tipoTransacao, data);
+            transacaoAtualizada.setId(transacaoId);
+            clienteLogado.atualizarTransacao(transacaoAtualizada);
         }
         ClienteService.salvarClientes(clientes);
     }
@@ -72,6 +71,12 @@ public class GerenciadorFinanceiro {
 
     public void setClienteLogado(Cliente cliente) {
         this.clienteLogado = cliente;
+        // Verifica se o cliente esta na lista
+        for (Cliente c : this.clientes){
+            if (c.getEmail().equals(cliente.getEmail())){
+                clienteLogado = c;
+            }
+        }
     }
 
     // Métodos auxiliares
