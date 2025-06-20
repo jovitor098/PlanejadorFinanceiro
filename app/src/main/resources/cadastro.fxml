@@ -30,8 +30,8 @@
     </GridPane>
     
     <HBox spacing="10" alignment="CENTER">
-        <Button text="Cadastrar" fx:id="cadastrarButton" onAction="#handleCadastrar"/>
-        <Button text="Voltar" fx:id="voltarButton" onAction="#handleVoltar"/>
+        <Button text="Cadastrar" fx:id="cadastrarButton" onAction="#handleCadastrar" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
+        <Button text="Voltar" fx:id="voltarButton" onAction="#handleVoltar" style="-fx-background-color: #ecf0f1; -fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-background-radius: 8;"/>
     </HBox>
     
     <Label fx:id="mensagemLabel" style="-fx-text-fill: red;"/>

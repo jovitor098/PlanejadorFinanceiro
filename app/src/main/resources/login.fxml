@@ -14,7 +14,7 @@
                   GridPane.rowIndex="1" GridPane.columnIndex="1" />
     
     <HBox spacing="10" GridPane.rowIndex="2" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
-        <Button text="Entrar" fx:id="loginButton" onAction="#handleLogin" />
+        <Button text="Entrar" fx:id="loginButton" onAction="#handleLogin"  style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;"/>
     </HBox>
     
     <HBox alignment="CENTER" GridPane.rowIndex="3" GridPane.columnIndex="0" 

@@ -59,13 +59,18 @@ public class TransacaoDialogo extends Dialog<ResultadoTransacaoDialogo> {
 
         // Botões
         getDialogPane().getButtonTypes().addAll(salvarButtonType,ButtonType.CLOSE);
-
+        // Adiciona estilos
+        getDialogPane().lookupButton(salvarButtonType).setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;");
+        getDialogPane().lookupButton(ButtonType.CLOSE).setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;");
         setTitle("Criar transação");
     }
 
     public void montarDialogo(Transacao transacaoEditar) {
         montarDialogo();
+        // Adiciona botao de excluir
         getDialogPane().getButtonTypes().add(excluirButtonType);
+        // Adiciona estilo
+        getDialogPane().lookupButton(excluirButtonType).setStyle("-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;");
 
         // Inicializa campos
         campoNome.setText(transacaoEditar.getNome());
