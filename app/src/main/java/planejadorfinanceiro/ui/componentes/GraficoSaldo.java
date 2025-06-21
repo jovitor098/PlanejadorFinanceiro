@@ -10,6 +10,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import planejadorfinanceiro.model.Cliente;
+import planejadorfinanceiro.model.TipoTransacao;
 import planejadorfinanceiro.model.Transacao;
 
 public class GraficoSaldo extends LineChart<String, Number> {
@@ -85,7 +86,12 @@ public class GraficoSaldo extends LineChart<String, Number> {
         // Soma os valores das transações por mês
         for (Transacao transacao : transacoesAno){
             Month mes = transacao.getData().getMonth();
-            saldoMes.put(mes, saldoMes.getOrDefault(mes, 0.0) + transacao.getValor());
+            if (transacao.getTipo() == TipoTransacao.ENTRADA){
+                saldoMes.put(mes, saldoMes.getOrDefault(mes, 0.0) + transacao.getValor());
+            }
+            else {
+                saldoMes.put(mes, saldoMes.getOrDefault(mes, 0.0) - transacao.getValor());
+            }
         }
         return saldoMes;
     }
@@ -94,7 +100,14 @@ public class GraficoSaldo extends LineChart<String, Number> {
         // Calcula o saldo total acumulado de todos os anos anteriores ao ano especificado.
         return cliente.getTransacoes().stream()
                 .filter(t -> t.getData().getYear() < ano)
-                .mapToDouble(Transacao::getValor)
+                .mapToDouble(t -> {
+                        if (t.getTipo() == TipoTransacao.ENTRADA){
+                            return t.getValor();
+                        }
+                        else {
+                            return - t.getValor();
+                        }
+                })
                 .sum();
     }
 
