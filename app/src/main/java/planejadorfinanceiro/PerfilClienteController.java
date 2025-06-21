@@ -73,7 +73,12 @@ public class PerfilClienteController {
 
         List<Transacao> transacoesCliente = cliente.getTransacoes();
         // Mostra na tabela as ultimas 5 transacoes
-        tabelaTransacao.mostrarTransacoes(transacoesCliente.subList(Math.max(transacoesCliente.size() - 5, 0), transacoesCliente.size()));
+        List<Transacao> ultimasTransacoes = transacoesCliente
+                .stream()
+                .sorted((t1, t2) -> t2.getData().compareTo(t1.getData()))
+                .limit(5)
+                .toList();
+        tabelaTransacao.mostrarTransacoes(ultimasTransacoes);
     }
     
     @FXML
