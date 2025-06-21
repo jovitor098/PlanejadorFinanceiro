@@ -41,7 +41,9 @@ public class LoginController {
             messageLabel.setStyle("-fx-text-fill: red;");
             return;
         }
-        
+        // Carrega o arquivo
+        ClienteService.carregarCaminhoArquivo();
+
         // Para debug: mostrar clientes cadastrados
         List<Cliente> clientes = ClienteService.carregarClientes();
         System.out.println("Total de clientes cadastrados: " + clientes.size());
