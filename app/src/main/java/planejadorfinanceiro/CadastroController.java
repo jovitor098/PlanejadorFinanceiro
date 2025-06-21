@@ -53,6 +53,9 @@ public class CadastroController {
             return;
         }
 
+        // Carrega o arquivo
+        ClienteService.carregarCaminhoArquivo();
+
         // Para debug: mostrar clientes já cadastrados
         List<Cliente> clientesAtuais = ClienteService.carregarClientes();
         System.out.println("Clientes cadastrados antes: " + clientesAtuais.size());
