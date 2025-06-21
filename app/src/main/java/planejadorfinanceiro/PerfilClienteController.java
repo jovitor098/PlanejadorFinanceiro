@@ -51,6 +51,12 @@ public class PerfilClienteController {
         // Formata o saldo como valor monetário
         NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         saldoLabel.setText(formatoMoeda.format(cliente.getSaldo()));
+        // Configura a cor da label saldo
+        if (cliente.getSaldo() >= 0) {
+            saldoLabel.setStyle("-fx-text-fill: #27ae60; -fx-font-weight: bold; -fx-font-size: 13px;"); // verde
+        } else {
+            saldoLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-weight: bold; -fx-font-size: 13px;"); // vermelho
+        }
 
         // Coloca as todos os anos que o cliente fez transação como opção para selecionar
         boxSelecionarAno.getItems().setAll(clienteLogado.obterAnosTransacoes());

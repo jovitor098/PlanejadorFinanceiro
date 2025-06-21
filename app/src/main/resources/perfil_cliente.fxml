@@ -21,7 +21,7 @@
             <Label fx:id="emailLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
             <Label style="-fx-font-weight: bold;" text="Saldo:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <Label fx:id="saldoLabel" style="-fx-text-fill: #27ae60; -fx-font-weight: bold; -fx-font-size: 13px;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="saldoLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <GraficoSaldo fx:id="graficoSaldo" title="Evolução Saldo" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <ComboBox fx:id="boxSelecionarAno" onAction="#handleSelecionarAno" prefWidth="150.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" style="-fx-background-color: #bdc3c7; -fx-text-fill: #2c3e50; -fx-font-weight: bold; -fx-background-radius: 8; " />
 
