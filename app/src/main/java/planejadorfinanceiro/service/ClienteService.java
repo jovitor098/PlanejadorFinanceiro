@@ -14,18 +14,28 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ClienteService {
     // Caminho para o arquivo dentro da pasta service
     private static final String ARQUIVO_NOME = "clientes_cadastrados.json";
-    private static final String CAMINHO_ARQUIVO = obterCaminhoArquivo();
+    private static String CAMINHO_ARQUIVO;
     private static final ObjectMapper objectMapper = createObjectMapper();
+
+    // Método para carregar o caminho do arquivo na pasta de service
+    public static void carregarCaminhoArquivo(){
+        CAMINHO_ARQUIVO = obterCaminhoArquivo(ClienteService.class);
+    }
+
+    public static void carregarCaminhoArquivo(Class<?> classeReferencia){
+        CAMINHO_ARQUIVO = obterCaminhoArquivo(classeReferencia);
+    }
     
-    // Método para obter o caminho do arquivo na pasta de service
-    private static String obterCaminhoArquivo() {
+    // Método para obter o caminho do arquivo em uma pasta especifica
+    public static String obterCaminhoArquivo(Class<?> classeReferencia) {
         try {
             // Obtém o caminho da classe ClienteService
-            URL resourceUrl = ClienteService.class.getResource("");
+            URL resourceUrl = classeReferencia.getResource("");
             if (resourceUrl != null) {
                 // Constrói o caminho completo para o arquivo
                 Path path = Paths.get(resourceUrl.toURI()).resolve(ARQUIVO_NOME);
@@ -78,7 +88,7 @@ public class ClienteService {
 
         try {
             System.out.println("Conteúdo do arquivo JSON:");
-            try (java.util.Scanner scanner = new java.util.Scanner(arquivo)) {
+            try (Scanner scanner = new Scanner(arquivo)) {
                 while (scanner.hasNextLine()) {
                     System.out.println(scanner.nextLine());
                 }
