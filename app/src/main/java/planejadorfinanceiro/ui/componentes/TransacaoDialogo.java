@@ -1,7 +1,10 @@
 package planejadorfinanceiro.ui.componentes;
 
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import planejadorfinanceiro.excecoes.TransacaoInvalidaException;
 import planejadorfinanceiro.model.TipoTransacao;
 import planejadorfinanceiro.model.Transacao;
 import planejadorfinanceiro.model.TransacaoFactory;
@@ -11,6 +14,7 @@ public class TransacaoDialogo extends Dialog<ResultadoTransacaoDialogo> {
     private TextField campoValor;
     private DatePicker campoData;
     private ComboBox<TipoTransacao> campoTipo;
+    private Label erroLabel;
 
     private ButtonType salvarButtonType = new ButtonType("Salvar", ButtonBar.ButtonData.OK_DONE);
     private ButtonType excluirButtonType = new ButtonType("Excluir", ButtonBar.ButtonData.LEFT);
@@ -22,13 +26,20 @@ public class TransacaoDialogo extends Dialog<ResultadoTransacaoDialogo> {
         campoTipo = new ComboBox<>();
         campoTipo.getItems().addAll(TipoTransacao.values());
 
+        erroLabel = new Label();
+        erroLabel.setText("");
+        erroLabel.setStyle("-fx-text-fill: red;");
+
         salvarButtonType = new ButtonType("Salvar", ButtonBar.ButtonData.OK_DONE);
         excluirButtonType = new ButtonType("Excluir", ButtonBar.ButtonData.LEFT);
 
         // Retorna o resultado de acordo com o botão clicado
         setResultConverter(dialogButton -> {
             if (dialogButton == salvarButtonType){
-                return new ResultadoTransacaoDialogo(criarTransacaoDoDialogo(), dialogButton.getButtonData());
+                Transacao transacao = criarTransacaoDoDialogo();
+                if (transacao != null){
+                    return new ResultadoTransacaoDialogo(criarTransacaoDoDialogo(), dialogButton.getButtonData());
+                }
             }
             if (dialogButton == excluirButtonType){
                 return new ResultadoTransacaoDialogo(null, dialogButton.getButtonData());
@@ -55,13 +66,24 @@ public class TransacaoDialogo extends Dialog<ResultadoTransacaoDialogo> {
         grid.add(new Label("Tipo:"), 0, 3);
         grid.add(campoTipo, 1, 3);
 
+        grid.add(erroLabel, 0, 4, 2, 1);
+
         getDialogPane().setContent(grid);
 
         // Botões
         getDialogPane().getButtonTypes().addAll(salvarButtonType,ButtonType.CLOSE);
         // Adiciona estilos
-        getDialogPane().lookupButton(salvarButtonType).setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;");
+        Node salvarButton = getDialogPane().lookupButton(salvarButtonType);
+        salvarButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;");
         getDialogPane().lookupButton(ButtonType.CLOSE).setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;");
+
+        // Verica se é possivel criar uma transação com os campos atuais
+        salvarButton.addEventFilter(ActionEvent.ACTION, event -> {
+            Transacao transacao = criarTransacaoDoDialogo();
+            if (transacao == null) {
+                event.consume();
+            }
+        });
         setTitle("Criar transação");
     }
 
@@ -82,10 +104,19 @@ public class TransacaoDialogo extends Dialog<ResultadoTransacaoDialogo> {
     }
 
     private Transacao criarTransacaoDoDialogo() {
-        return TransacaoFactory.criarTransacao(
-                campoNome.getText().trim(),
-                Double.parseDouble(campoValor.getText()),
-                campoTipo.getValue(),
-                campoData.getValue());
+        try{
+            return TransacaoFactory.criarTransacao(
+                    campoNome.getText().trim(),
+                    Double.parseDouble(campoValor.getText()),
+                    campoTipo.getValue(),
+                    campoData.getValue());
+        }
+        catch (NumberFormatException e){
+            erroLabel.setText("O valor não pode ser nulo");
+        }
+        catch (TransacaoInvalidaException e){
+            erroLabel.setText(e.getMessage());
+        }
+        return null;
     }
 }
