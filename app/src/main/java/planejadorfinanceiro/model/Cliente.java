@@ -2,6 +2,8 @@ package planejadorfinanceiro.model;
 
 import java.util.*;
 
+import planejadorfinanceiro.ui.componentes.NotificadorJavaFX;
+
 public class Cliente {
     private String nome;
     private String email;
@@ -11,12 +13,15 @@ public class Cliente {
     private double saidaTotal = 0;
     private List<Transacao> transacoes = new ArrayList<>();
     private List<Meta> metas = new ArrayList<>();
+    private List<Notificavel> notificaveis = new ArrayList<>();
 
     // Construtor padrão (sem argumentos) necessário para deserialização JSON
     public Cliente() {
         // Inicialização padrão
         this.transacoes = new ArrayList<>();
         this.metas = new ArrayList<>();
+        this.notificaveis = new ArrayList<>();
+        notificaveis.add(new NotificadorJavaFX());
     }
 
     public Cliente(String nome, String email, String senha) {
@@ -78,6 +83,12 @@ public class Cliente {
         } else {
             saidaTotal += adicionar ? valor : -valor;
             saldo += adicionar ? -valor : valor;
+        }
+    }
+
+    public void notificar(String mensagem){
+        for (Notificavel notificavel : notificaveis){
+            notificavel.notificar(mensagem);
         }
     }
 

@@ -26,17 +26,20 @@ public class GerenciadorFinanceiro {
         Transacao novaTransacao = TransacaoFactory.criarEntrada(nome, valor, data);
         clienteLogado.adicionarTransacao(novaTransacao);
         ClienteService.salvarClientes(clientes);
+        clienteLogado.notificar("Transação de entrada criada com sucesso");
     }
 
     public void criarTransacaoSaida(String nome, double valor, LocalDate data){
         Transacao novaTransacao = TransacaoFactory.criarSaida(nome, valor, data);
         clienteLogado.adicionarTransacao(novaTransacao);
         ClienteService.salvarClientes(clientes);
+        clienteLogado.notificar("Transação de saída criada com sucesso");
     }
 
     public void removerTransacao(Transacao transacao){
         clienteLogado.removerTransacao(transacao);
         ClienteService.salvarClientes(clientes);
+        clienteLogado.notificar("Transacação removida com sucesso");
     }
 
     public void atualizarTransacao(UUID transacaoId, String nome, double valor, TipoTransacao tipoTransacao, LocalDate data){
@@ -45,19 +48,22 @@ public class GerenciadorFinanceiro {
             Transacao transacaoAtualizada = TransacaoFactory.criarTransacao(nome, valor, tipoTransacao, data);
             transacaoAtualizada.setId(transacaoId);
             clienteLogado.atualizarTransacao(transacaoAtualizada);
+            clienteLogado.notificar("Transação atualizada com sucesso");
+            ClienteService.salvarClientes(clientes);
         }
-        ClienteService.salvarClientes(clientes);
     }
 
     public void criarMeta(String nome, double valorAlvo, LocalDate data){
         Meta novaMeta = new Meta(nome, valorAlvo, data);
         clienteLogado.adicionarMeta(novaMeta);
         ClienteService.salvarClientes(clientes);
+        clienteLogado.notificar("Meta criada com sucesso");
     }
 
     public void removerMeta(Meta meta){
         clienteLogado.removerMeta(meta);
         ClienteService.salvarClientes(clientes);
+        clienteLogado.notificar("Meta removida com sucesso");
     }
 
     public void atualizarMeta(UUID metaId, String nome, double valorAlvo, double valorAtual, LocalDate data){
@@ -66,6 +72,8 @@ public class GerenciadorFinanceiro {
             Meta metaAtualizada = new Meta(nome, valorAlvo, valorAtual, data);
             metaAtualizada.setId(metaId); // Mantém o ID original
             clienteLogado.atualizarMeta(metaAtualizada);
+            clienteLogado.notificar("Meta atualizada com sucesso");
+            ClienteService.salvarClientes(clientes);
         }
     }
 
