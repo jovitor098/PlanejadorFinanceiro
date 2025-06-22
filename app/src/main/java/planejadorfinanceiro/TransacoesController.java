@@ -102,6 +102,28 @@ public class TransacoesController {
     }
 
     @FXML
+    private void handleAdicionarTransacao(){
+        TransacaoDialogo dialogo = new TransacaoDialogo();
+        dialogo.montarDialogo();
+        Optional<ResultadoTransacaoDialogo> resultado = dialogo.showAndWait();
+
+        if (resultado.isPresent()){
+            // Se o cliente clicou para salvar
+            if (resultado.get().getButtonType() == ButtonBar.ButtonData.OK_DONE){
+                Transacao novaTransacao = resultado.get().getTransacao();
+                if (novaTransacao.getTipo() == TipoTransacao.ENTRADA){
+                    gerenciador.criarTransacaoEntrada(novaTransacao.getNome(), novaTransacao.getValor(), novaTransacao.getData());
+                }
+                else {
+                    gerenciador.criarTransacaoSaida(novaTransacao.getNome(), novaTransacao.getValor(), novaTransacao.getData());
+                }
+                // Atualiza a tabela
+                tabelaTransacao.mostrarTransacoes(gerenciador.getClienteLogado().getTransacoes());
+            }
+        }
+    }
+
+    @FXML
     private void handleFiltrar() {
         List<Transacao> listaFiltrada = gerenciador.getClienteLogado().getTransacoes().stream().filter(transacao -> {
             // Verifica nome

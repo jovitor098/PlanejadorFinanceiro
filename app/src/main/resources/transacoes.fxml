@@ -26,6 +26,7 @@
          </HBox>
          <Button mnemonicParsing="false" text="Filtrar" onAction="#handleFiltrar" style="-fx-background-color: #5dade2; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" />
         </FlowPane>
+        <Button text="Adicionar Transação" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13px; -fx-background-radius: 8; -fx-padding: 8 16;" onAction="#handleAdicionarTransacao" />
         <TabelaTransacao fx:id="tabelaTransacao">
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
