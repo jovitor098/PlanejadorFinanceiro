@@ -112,7 +112,7 @@ public class TransacaoDialogo extends Dialog<ResultadoTransacaoDialogo> {
                     campoData.getValue());
         }
         catch (NumberFormatException e){
-            erroLabel.setText("O valor não pode ser nulo");
+            erroLabel.setText("Digite um número válido");
         }
         catch (TransacaoInvalidaException e){
             erroLabel.setText(e.getMessage());
