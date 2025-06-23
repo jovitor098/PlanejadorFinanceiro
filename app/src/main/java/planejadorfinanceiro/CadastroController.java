@@ -15,6 +15,7 @@ import planejadorfinanceiro.service.ClienteService;
 import java.io.IOException;
 import java.util.List;
 
+/** Controlador da interface de cadastro de novos usuários. */
 public class CadastroController {
     @FXML
     private TextField nomeField;
@@ -31,6 +32,13 @@ public class CadastroController {
     @FXML
     private Label mensagemLabel;
 
+    /**
+     * Ação excecutada ao clicar em 'cadastrar'.
+     * Faz a validação de preenchimento dos campos.
+     * Busca por contas com mesmo email evitando duplicações.
+     * Não havendo problemas, cria e armazena um novo cliente.
+     * Retorna para o usuário na interface uma mensagem de sucesso ou erro.
+     */
     @FXML
     private void handleCadastrar() {
         String nome = nomeField.getText().trim();
@@ -86,6 +94,10 @@ public class CadastroController {
         confirmarSenhaField.clear();
     }
 
+    /**
+     * Ação excecutada ao clicar em 'Voltar'.
+     * Retorna para tela de login carregando o FXML correspondente.
+     */
     @FXML
     private void handleVoltar() {
         try {

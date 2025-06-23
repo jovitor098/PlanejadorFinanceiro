@@ -18,6 +18,11 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
+/** Controlador da tela perfil do cliente/tela principal.
+ * Exibe as informações do cadastro, saldo atual, gráfico de evolução do saldo por ano,
+ * uma prévia das últimas trasações realizadas, um botão para a pagina de transações,
+ * -- um botão para a página de metas.
+ */
 public class PerfilClienteController {
     @FXML
     private Label nomeLabel;
@@ -39,7 +44,11 @@ public class PerfilClienteController {
     // Cliente atual que está logado
     private Cliente clienteLogado;
     
-    // Método para inicializar dados do cliente na tela
+    /**
+     * Método para inicializar dados do cliente na tela.
+     * 
+     * @param cliente O cliente autenticado cujas informações serão exibidas
+     */
     public void inicializarDados(Cliente cliente) {
         this.clienteLogado = cliente;
         graficoSaldo.setCliente(cliente);
@@ -81,6 +90,9 @@ public class PerfilClienteController {
         tabelaTransacao.mostrarTransacoes(ultimasTransacoes);
     }
     
+    /**
+     * Ação excecutada ao clicar em 'voltar', retorna à tela de login.
+     */
     @FXML
     private void handleVoltar() {
         try {
@@ -99,6 +111,10 @@ public class PerfilClienteController {
         }
     }
 
+    /**
+     * Ação excecutada ao clicar em 'Ver todas as transações', leva à tela com o 
+     * histórico completo de transações do cliente.
+     */
     @FXML
     private void handleTodasTransacoes(){
         try {
@@ -119,6 +135,9 @@ public class PerfilClienteController {
 
     }
 
+    /** 
+     * Ação excecutada ao clicar no seletor, atualiza o gráfico com os dados do ano selecionado.
+     */
     @FXML
     private void handleSelecionarAno(){
         // Atualiza o gráfico para o ano selecionado

@@ -16,7 +16,7 @@ import planejadorfinanceiro.service.ClienteService;
 
 import java.io.IOException;
 import java.util.List;
-
+/** Controlador da interface de login do sistema. */
 public class LoginController {
     @FXML
     private TextField usernameField;
@@ -29,6 +29,12 @@ public class LoginController {
     @FXML
     private Label messageLabel;
 
+    /** 
+     * Ação excecutada quando 'login' é acionado.
+     * Verifica se a combinação de email e senha é correspondente a algum cliente cadastrado.
+     * Caso positivo realiza o login e carrega a tela de perfil.
+     * Também permite login de admin.
+     */
     @FXML
     private void handleLogin() {
         String email = usernameField.getText().trim();
@@ -83,6 +89,11 @@ public class LoginController {
         }
     }
     
+    /**
+     * Abre a tela de perfil caso o login seja bem sucedido.
+     * 
+     * @param cliente O cliente autenticado 
+     */
     private void abrirTelaPerfil(Cliente cliente) {
         try {
             // Carrega a tela de perfil
@@ -108,6 +119,7 @@ public class LoginController {
         }
     }
     
+    /** Ação excecutada ao clicar 'Cadastre-se', trocando para a tela de cadastro. */
     @FXML
     private void handleCadastro() {
         try {

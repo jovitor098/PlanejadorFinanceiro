@@ -9,9 +9,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * JavaFX App
+ * Classe principal da aplicação JavaFX do Planejador Financeiro.
+ * Inicializa a interface gráfica e exibe a janela de login carregando o aqruivo correspondente.
  */
 public class App extends Application {
+    /**
+    * Método chamado automaticamente pelo JavaFX para iniciar a aplicação.
+    *
+    * @param stage O palco principal da aplicação
+    * @throws IOException Se o FXML não puder ser carregado 
+    */
     @Override
     public void start(Stage stage) throws IOException {
         // Carregando o FXML usando getClass().getResource
@@ -23,6 +30,11 @@ public class App extends Application {
         stage.show();
     }
 
+    /**
+     * Método principal, inicia a aplicação
+     * 
+     * @param args Não usado
+     */
     public static void main(String[] args) {
         launch(args);
     }

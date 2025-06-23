@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 
 import java.time.format.DateTimeFormatter;
 
+/** Controlador da página de visualização das metas financeiras do cliente. */
 public class MetasController {
 
     @FXML private TableView<Meta> tabelaMetas;
@@ -23,11 +24,17 @@ public class MetasController {
 
     private Cliente cliente;
 
+    /**
+     * Define o cliente atual e carrega suas metas à tabela.
+     * 
+     * @param cliente O cliente que terá suas metas exibidas
+     */
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
         carregarMetas();
     }
 
+    
     /*@FXML
     private void initialize() {
         colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -43,7 +50,11 @@ public class MetasController {
             )
         );
     }*/
-
+    
+    /**
+     * Inicializa a tabela de metas com os dados das colunas.
+     * Configura a exibição dos dados.
+     */
     @FXML
     private void initialize() {
         colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -64,7 +75,7 @@ public class MetasController {
         );
     }
 
-
+    /** Carrega as metas do cliente e insere na tabela da interface. */
     private void carregarMetas() {
         ObservableList<Meta> metas = FXCollections.observableArrayList(cliente.getMetas());
         tabelaMetas.setItems(metas);

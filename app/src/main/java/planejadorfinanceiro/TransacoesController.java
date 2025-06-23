@@ -18,6 +18,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Controlador da tela de transações.
+ * Permite exibição, adição, edição, exclusão e busca por filtragem de transações do cliente.
+ */
 public class TransacoesController {
     @FXML
     private CheckBox entradaCheckBox;
@@ -40,6 +44,10 @@ public class TransacoesController {
 
     private GerenciadorFinanceiro gerenciador;
 
+    /**
+     * Inicializa o controlador configurando a tabela de transações, incluindo 
+     * o clique duplo para exiber detalhes e permitir edição/exclusão de transações.
+     */
     public void initialize() {
         gerenciador = GerenciadorFinanceiro.getInstancia();
         tabelaTransacao.setRowFactory(tv -> {
@@ -54,7 +62,12 @@ public class TransacoesController {
         });
         tabelaTransacao.mostrarTransacoes(gerenciador.getClienteLogado().getTransacoes());
     }
-
+    /**
+     * Método usado por initializa para abrir a caixa de diálogo que permite a edição/exclusão
+     * de transações.
+     * 
+     * @param transacao A transação a ser exibida
+     */
     private void abrirInformacoesTransacao(Transacao transacao){
         TransacaoDialogo dialogo = new TransacaoDialogo();
         dialogo.montarDialogo(transacao);
@@ -80,6 +93,7 @@ public class TransacoesController {
         }
     }
 
+    /** Ação excecutada ao clicar 'voltar', volta para a tela de perfil do cliente */
     @FXML
     private void handleVoltar() {
         try {
@@ -101,6 +115,9 @@ public class TransacoesController {
         }
     }
 
+    /**
+     * Abre uma caixa de diálogo para adicionar uma nova transação às do cliente.
+     */
     @FXML
     private void handleAdicionarTransacao(){
         TransacaoDialogo dialogo = new TransacaoDialogo();
@@ -123,6 +140,10 @@ public class TransacoesController {
         }
     }
 
+    /**
+     * Aplica o filtro adequado de acordo com a escolha do usuário. 
+     * Podendo filtrar as trnasações por nome, valor, tipo e intrevalo de datas.
+     */
     @FXML
     private void handleFiltrar() {
         List<Transacao> listaFiltrada = gerenciador.getClienteLogado().getTransacoes().stream().filter(transacao -> {
