@@ -4,7 +4,22 @@
 package planejadorfinanceiro.model;
 import java.time.LocalDate;
 
+/**
+ * Classe de demonstração e verificação dos dados via terminal.
+ * Simula o uso do sistema em um cenário simples.
+ */
 public class Demonstracao {
+    /**
+     * Metodo Construtor padrão explícito para gerar o javadoc.
+     */
+    public void Demonstração(){
+    }
+
+    /**
+     * Metodo principal que excecuta a simulação.
+     * 
+     * @param args Não usado
+     */
     public static void main(String[] args) {
         // Criando um cliente
         Cliente cliente = new Cliente("joao", "joao@email.com", "123");
