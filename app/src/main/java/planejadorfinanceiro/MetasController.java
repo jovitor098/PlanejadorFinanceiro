@@ -1,70 +1,75 @@
 package planejadorfinanceiro;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import planejadorfinanceiro.model.Meta;
+import planejadorfinanceiro.model.Cliente;
 import planejadorfinanceiro.model.GerenciadorFinanceiro;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import planejadorfinanceiro.model.Meta;
+import planejadorfinanceiro.ui.componentes.MetasDialogo;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.Optional;
 
-/** Controlador da página de visualização das metas financeiras do cliente. */
 public class MetasController {
 
-    @FXML private TableView<Meta> tabelaMetas;
-    @FXML private TableColumn<Meta, String> colunaNome;
-    @FXML private TableColumn<Meta, Double> colunaValorAlvo;
-    @FXML private TableColumn<Meta, Double> colunaValorAtual;
-    @FXML private TableColumn<Meta, Double> colunaProgresso;
-    @FXML private TableColumn<Meta, String> colunaPrazo;
+    @FXML
+    private TableView<Meta> tabelaMetas;
+    @FXML
+    private TableColumn<Meta, String> colunaNome;
+    @FXML
+    private TableColumn<Meta, Double> colunaValorAlvo;
+    @FXML
+    private TableColumn<Meta, Double> colunaValorAtual;
+    @FXML
+    private TableColumn<Meta, Double> colunaProgresso;
+    @FXML
+    private TableColumn<Meta, String> colunaPrazo;
     @FXML
     private Button voltarButton;
     @FXML
     private Button novaMetaButton;
+    @FXML
+    private Label messageLabel;
 
-    //private Cliente cliente;
     private GerenciadorFinanceiro gerenciador;
+    private ObservableList<Meta> metas;
 
     @FXML
     private void initialize() {
         gerenciador = GerenciadorFinanceiro.getInstancia();
+
         colunaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaValorAlvo.setCellValueFactory(new PropertyValueFactory<>("valorAlvo"));
         colunaValorAtual.setCellValueFactory(new PropertyValueFactory<>("valorAtual"));
-
-        // Usa lambda para exibir progresso diretamente (sem usar Property)
-        colunaProgresso.setCellValueFactory(cellData -> {
-            double progresso = cellData.getValue().calcularProgresso();
-            return new javafx.beans.property.SimpleDoubleProperty(progresso).asObject();
-        });
-
-        // Formata a data como string
+        colunaProgresso.setCellValueFactory(cellData ->
+                new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().calcularProgresso()).asObject()
+        );
         colunaPrazo.setCellValueFactory(cellData ->
-            new javafx.beans.property.SimpleStringProperty(
-                cellData.getValue().getPrazoFinal().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-            )
+                new javafx.beans.property.SimpleStringProperty(
+                        cellData.getValue().getPrazoFinal().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                )
         );
 
-                // Carrega e exibe as metas do cliente logado
-        List<Meta> metas = gerenciador.getClienteLogado().getMetas();
-        ObservableList<Meta> observableMetas = FXCollections.observableArrayList(metas);
-        tabelaMetas.setItems(observableMetas);
+        carregarMetas();
+    }
+
+    private void carregarMetas() {
+        Cliente cliente = gerenciador.getClienteLogado();
+        metas = FXCollections.observableArrayList(cliente.getMetas());
+        tabelaMetas.setItems(metas);
     }
 
     @FXML
     private void handleVoltar() {
         try {
-            // Carrega a tela de perfil cliente
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/perfil_cliente.fxml"));
             Parent root = loader.load();
 
@@ -72,7 +77,6 @@ public class MetasController {
             controller.inicializarDados(gerenciador.getClienteLogado());
             Scene scene = new Scene(root);
 
-            // Obtém o palco (stage) atual e muda a cena
             Stage stage = (Stage) voltarButton.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Perfil do Cliente - " + gerenciador.getClienteLogado().getNome());
@@ -84,6 +88,16 @@ public class MetasController {
 
     @FXML
     private void handleCriarMeta() {
+        MetasDialogo dialogo = new MetasDialogo();
+        Optional<Meta> resultado = dialogo.showAndWait();
+
+        if (resultado.isPresent()) {
+            Meta novaMeta = resultado.get();
+            gerenciador.getClienteLogado().adicionarMeta(novaMeta);
+            metas.add(novaMeta);
+            tabelaMetas.refresh();
+        }
     }
 }
+
 
