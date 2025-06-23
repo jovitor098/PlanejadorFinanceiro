@@ -12,8 +12,17 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import planejadorfinanceiro.model.Notificavel;
 
+/**
+ * Implementação da interface {@link Notificavel} que exibe notificações 
+ * no canto inferioer esquerdo da tela utilizando JavaFX.
+ */
 public class NotificadorJavaFX implements Notificavel {
 
+    /**
+     * Exibe uma notificação com a mensagem especificada em uma janela.
+     *
+     * @param mensagem A mensagem exibida na notificação
+     */
     @Override
     public void notificar(String mensagem) {
         // Criar um Stage para a notificação

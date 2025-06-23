@@ -95,7 +95,7 @@ public class Transacao {
     }
     
     /**
-     * estabelece o nome da transação.
+     * Define o nome da transação.
      * 
      * @param nome Nome da transação
      */
@@ -104,7 +104,7 @@ public class Transacao {
     }
     
     /**
-     * Estabelece o tipo da transação.
+     * Define o tipo da transação.
      * 
      * @param tipo Tipo (ENTRADA ou SAIDA)
      */
@@ -113,7 +113,7 @@ public class Transacao {
     }
     
     /**
-     * Estabelece a data da transação.
+     * Define a data da transação.
      * 
      * @param data Data da transação
      */

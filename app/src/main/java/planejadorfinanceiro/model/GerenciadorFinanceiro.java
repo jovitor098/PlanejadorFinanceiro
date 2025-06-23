@@ -107,7 +107,7 @@ public class GerenciadorFinanceiro {
     }
 
     /**
-     * Remove uma meta financeir já existente do cliente logado.
+     * Remove uma meta financeira já existente do cliente logado.
      * 
      * @param meta A meta a ser removida
      */

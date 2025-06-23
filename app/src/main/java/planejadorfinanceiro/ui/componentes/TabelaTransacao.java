@@ -12,10 +12,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/** Uma tabela de transações financeiras. */
 public class TabelaTransacao extends TableView<Transacao> {
     private final static int ALTURA_LINHA = 42;
     private final static int ALTURA_CABECALHO = 50;
 
+    /**
+     * Construtor padrão que configura as colunas, formatação e estilo CSS da tabela.
+     */
     public TabelaTransacao() {
         super();
         // Configurar as colunas
@@ -74,6 +78,11 @@ public class TabelaTransacao extends TableView<Transacao> {
         getStylesheets().add(getClass().getResource("/tabelaTransacaoStyle.css").toExternalForm());
     }
 
+    /**
+     * Exibe a lista de transações na tabela, ajustando a altura da tabela conforme o conteúdo.
+     *
+     * @param transacoes Lista de transações a serem exibidas
+     */
     public void mostrarTransacoes(List<Transacao> transacoes){
         setItems(FXCollections.observableList(transacoes));
         refresh();

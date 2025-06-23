@@ -9,6 +9,7 @@ import planejadorfinanceiro.model.TipoTransacao;
 import planejadorfinanceiro.model.Transacao;
 import planejadorfinanceiro.model.TransacaoFactory;
 
+/** Caixa de diálogo personalizada para criar ou editar {@link Transacao}. */
 public class TransacaoDialogo extends Dialog<ResultadoTransacaoDialogo> {
     private TextField campoNome;
     private TextField campoValor;
@@ -19,6 +20,9 @@ public class TransacaoDialogo extends Dialog<ResultadoTransacaoDialogo> {
     private ButtonType salvarButtonType = new ButtonType("Salvar", ButtonBar.ButtonData.OK_DONE);
     private ButtonType excluirButtonType = new ButtonType("Excluir", ButtonBar.ButtonData.LEFT);
 
+     /**
+     * Construtor padrão. Inicializa a lógica de retorno da transação com base no botão clicado.
+     */
     public TransacaoDialogo() {
         campoNome = new TextField();
         campoValor = new TextField();
@@ -48,6 +52,9 @@ public class TransacaoDialogo extends Dialog<ResultadoTransacaoDialogo> {
         });
     }
 
+    /**
+     * Monta a interface para criação de uma nova transação.
+     */
     public void montarDialogo() {
         // Layout
         GridPane grid = new GridPane();
@@ -87,6 +94,10 @@ public class TransacaoDialogo extends Dialog<ResultadoTransacaoDialogo> {
         setTitle("Criar transação");
     }
 
+    /**
+     * Monta a interface para edição de uma transação existente.
+     * @param transacaoEditar A transação que vai ser editada
+     */
     public void montarDialogo(Transacao transacaoEditar) {
         montarDialogo();
         // Adiciona botao de excluir
@@ -103,6 +114,11 @@ public class TransacaoDialogo extends Dialog<ResultadoTransacaoDialogo> {
         setTitle("Editar transação");
     }
 
+    /**
+     * Cria uma transação com base nos dados informados nos campos, se possível.
+     *
+     * @return Objeto Transacao se os dados forem válidos, null caso contrário
+     */
     private Transacao criarTransacaoDoDialogo() {
         try{
             return TransacaoFactory.criarTransacao(

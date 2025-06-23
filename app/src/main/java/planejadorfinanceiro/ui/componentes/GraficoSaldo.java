@@ -13,11 +13,18 @@ import planejadorfinanceiro.model.Cliente;
 import planejadorfinanceiro.model.TipoTransacao;
 import planejadorfinanceiro.model.Transacao;
 
+/**
+ * Gráfico que exibe a evolução saldo mensal de um cliente ao longo de um ano.
+ * Extende LineChart com meses no eixo X e valores financeiro no eixo Y.
+ */
 public class GraficoSaldo extends LineChart<String, Number> {
+
+    /** Cliente que o saldo será usado no gráfico. */
     private Cliente cliente;
-    // Constante para o locale pt-BR
+    /** Constante para o locale exibir em pt-BR. */
     private static final Locale LOCALE_PT_BR = Locale.of("pt", "BR");
 
+    /** Construtor padrão que configura o gráfico e seus eixos com as informações adequadas. */
     public GraficoSaldo() {
         super(new CategoryAxis(), new NumberAxis());
         CategoryAxis xAxis = (CategoryAxis) getXAxis();
@@ -32,6 +39,11 @@ public class GraficoSaldo extends LineChart<String, Number> {
         configurarEixoXComTodosMeses(xAxis);
     }
 
+    /**
+     * Configura o eixo X com todos os meses do ano em ordem e com abreviações.
+     * 
+     * @param xAxis Eixo X a ser configurado
+     */
     private void configurarEixoXComTodosMeses(CategoryAxis xAxis){
         // Obtém os nomes abreviados dos meses em português
         List<String> meses = Arrays.stream(Month.values())
@@ -41,6 +53,12 @@ public class GraficoSaldo extends LineChart<String, Number> {
         xAxis.setCategories(FXCollections.observableArrayList(meses));
     }
 
+    /**
+     * Atualiza o gráfico com os dados de saldo acumulado ao longo dos meses do ano específico.
+     * Remove os dados anteriores e adiciona uma nova série ao gráfico.
+     *
+     * @param ano O ano representado no gráfico
+     */
     public void atualizarAnoGrafico(int ano){
         Series<String, Number> serieSaldoAno = criarSerieSaldoMensal(ano);
         // Remove os dados anteriores do gráfico
@@ -49,6 +67,12 @@ public class GraficoSaldo extends LineChart<String, Number> {
         getData().add(serieSaldoAno);
     }
 
+    /**
+     * Cria uma série de dados contendo o saldo acumulado mês a mês do ano específico.
+     *
+     * @param ano O ano a ser visualizado
+     * @return Uma série contendo os dados mensais de saldo
+     */
     private Series<String, Number> criarSerieSaldoMensal(int ano){
         // Calcula o saldo inicial acumulado de anos anteriores
         double saldoAcumulado = calcularSaldoTotalAnosAnteriores(ano);
@@ -76,6 +100,12 @@ public class GraficoSaldo extends LineChart<String, Number> {
         return serieMensal;
     }
 
+    /**
+     * Calcula o saldo mensal(entrada - saída) para cada mês do ano específico.
+     *
+     * @param ano O ano para o qual os saldos mensais serão calculados
+     * @return Mapa com saldo por mẽs
+     */
     private Map<Month, Double> calcularSaldoMensal(int ano){
         Map<Month, Double> saldoMes = new EnumMap<>(Month.class);
         // Filtra as transações do ano especificado
@@ -96,6 +126,12 @@ public class GraficoSaldo extends LineChart<String, Number> {
         return saldoMes;
     }
 
+    /**
+     * Calcula o saldo acumulado de todos os anos anteriores ao ano específico.
+     *
+     * @param ano Ano de referência
+     * @return Saldo acumulado dos últimos anos
+     */
     private double calcularSaldoTotalAnosAnteriores(int ano){
         // Calcula o saldo total acumulado de todos os anos anteriores ao ano especificado.
         return cliente.getTransacoes().stream()
@@ -111,6 +147,11 @@ public class GraficoSaldo extends LineChart<String, Number> {
                 .sum();
     }
 
+    /**
+     * Define o cliente de onde se obtem as transações que serão usadas para gerar o gráfico.
+     *
+     * @param cliente Cliente a ser associado ao gráfico
+     */
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
