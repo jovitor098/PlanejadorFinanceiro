@@ -40,6 +40,8 @@ public class PerfilClienteController {
     private TabelaTransacao tabelaTransacao;
     @FXML
     private Button todasTransacaoesButton;
+    @FXML
+    private Button verMetasButton;
 
     // Cliente atual que está logado
     private Cliente clienteLogado;
@@ -138,6 +140,21 @@ public class PerfilClienteController {
     /** 
      * Ação excecutada ao clicar no seletor, atualiza o gráfico com os dados do ano selecionado.
      */
+    @FXML
+    private void handleVerMetas() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/metas.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = (Stage) verMetasButton.getScene().getWindow();
+            stage.setTitle("Metas do Cliente");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void handleSelecionarAno(){
         // Atualiza o gráfico para o ano selecionado
