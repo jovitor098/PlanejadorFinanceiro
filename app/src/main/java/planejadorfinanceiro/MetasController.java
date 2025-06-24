@@ -123,8 +123,9 @@ public class MetasController {
 
         if (resultado.isPresent()) {
             Meta novaMeta = resultado.get();
-            gerenciador.getClienteLogado().adicionarMeta(novaMeta);
-            carregarMetas();
+            gerenciador.criarMeta(novaMeta.getNome(), novaMeta.getValorAlvo(), novaMeta.getPrazoFinal());
+            metas.add(novaMeta);
+            tabelaMetas.refresh();
         }
     }
 
@@ -149,7 +150,8 @@ public class MetasController {
         Optional<ButtonType> resultado = confirmacao.showAndWait();
         if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
             gerenciador.removerMeta(metaSelecionada);
-            carregarMetas();
+            //carregarMetas();
+            tabelaMetas.refresh();
             messageLabel.setText("Meta removida com sucesso.");
         }
     }
