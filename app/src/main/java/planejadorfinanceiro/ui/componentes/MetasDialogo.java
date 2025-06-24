@@ -5,8 +5,11 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import planejadorfinanceiro.model.Meta;
+import planejadorfinanceiro.model.TipoTransacao;
+import planejadorfinanceiro.model.Transacao;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 /** Caixa de diálogo personalizada para criar uma nova {@link Meta}. */
 public class MetasDialogo extends Dialog<Meta> {
@@ -58,7 +61,6 @@ public class MetasDialogo extends Dialog<Meta> {
         grid.add(erroLabel, 0, 4, 2, 1);
 
         getDialogPane().setContent(grid);
-
         getDialogPane().getButtonTypes().addAll(salvarButtonType, ButtonType.CLOSE);
 
         Node salvarButton = getDialogPane().lookupButton(salvarButtonType);
@@ -96,4 +98,86 @@ public class MetasDialogo extends Dialog<Meta> {
         }
         return null;
     }
+
+    public Optional<Transacao> showTransacaoDialogo(String nomeMeta) {
+        Dialog<Transacao> dialog = new Dialog<>();
+        dialog.setTitle("Adicionar Transação para a Meta: " + nomeMeta);
+
+        TextField campoNome = new TextField();
+        campoNome.setPromptText("Descrição da transação");
+
+        TextField campoValor = new TextField();
+        campoValor.setPromptText("Valor (R$)");
+
+        ComboBox<TipoTransacao> campoTipo = new ComboBox<>();
+        campoTipo.getItems().setAll(TipoTransacao.values());
+        campoTipo.setValue(TipoTransacao.ENTRADA);
+
+        DatePicker campoData = new DatePicker(LocalDate.now());
+
+        Label erroLabel = new Label();
+        erroLabel.setStyle("-fx-text-fill: red;");
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+
+        grid.add(new Label("Nome:"), 0, 0);
+        grid.add(campoNome, 1, 0);
+
+        grid.add(new Label("Valor (R$):"), 0, 1);
+        grid.add(campoValor, 1, 1);
+
+        grid.add(new Label("Tipo:"), 0, 2);
+        grid.add(campoTipo, 1, 2);
+
+        grid.add(new Label("Data:"), 0, 3);
+        grid.add(campoData, 1, 3);
+
+        grid.add(erroLabel, 0, 4, 2, 1);
+
+        dialog.getDialogPane().setContent(grid);
+        ButtonType salvarBtn = new ButtonType("Salvar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(salvarBtn, ButtonType.CANCEL);
+
+        Node botaoSalvar = dialog.getDialogPane().lookupButton(salvarBtn);
+        botaoSalvar.addEventFilter(ActionEvent.ACTION, event -> {
+            try {
+                String nome = campoNome.getText().trim();
+                double valor = Double.parseDouble(campoValor.getText());
+                TipoTransacao tipo = campoTipo.getValue();
+                LocalDate data = campoData.getValue();
+
+                if (nome.isEmpty()) {
+                    erroLabel.setText("Nome da transação não pode ser vazio.");
+                    event.consume();
+                } else if (data == null) {
+                    erroLabel.setText("Selecione uma data.");
+                    event.consume();
+                } else if (valor <= 0) {
+                    erroLabel.setText("Valor deve ser positivo.");
+                    event.consume();
+                }
+            } catch (NumberFormatException e) {
+                erroLabel.setText("Digite um valor numérico válido.");
+                event.consume();
+            }
+        });
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == salvarBtn) {
+                try {
+                    String nome = campoNome.getText().trim();
+                    double valor = Double.parseDouble(campoValor.getText());
+                    TipoTransacao tipo = campoTipo.getValue();
+                    LocalDate data = campoData.getValue();
+                    return new Transacao(valor, nome, tipo, data);
+                } catch (Exception ignored) {}
+            }
+            return null;
+        });
+
+        return dialog.showAndWait();
+    }
 }
+

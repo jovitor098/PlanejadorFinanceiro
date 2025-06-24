@@ -12,6 +12,8 @@ import javafx.stage.Stage;
 import planejadorfinanceiro.model.Cliente;
 import planejadorfinanceiro.model.GerenciadorFinanceiro;
 import planejadorfinanceiro.model.Meta;
+import planejadorfinanceiro.model.TipoTransacao;
+import planejadorfinanceiro.model.Transacao;
 import planejadorfinanceiro.ui.componentes.MetasDialogo;
 
 import java.io.IOException;
@@ -59,6 +61,18 @@ public class MetasController {
         );
 
         carregarMetas();
+
+        // Evento de clique duplo na tabela, usado para atualizar o valor de uma meta
+        tabelaMetas.setRowFactory(tv -> {
+            TableRow<Meta> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    Meta metaSelecionada = row.getItem();
+                    abrirDialogoTransacaoParaMeta(metaSelecionada);
+                }
+            });
+            return row;
+        });
     }
 
     private void carregarMetas() {
@@ -93,9 +107,31 @@ public class MetasController {
 
         if (resultado.isPresent()) {
             Meta novaMeta = resultado.get();
-            gerenciador.getClienteLogado().adicionarMeta(novaMeta);
-            metas.add(novaMeta);
+            gerenciador.criarMeta(novaMeta.getNome(), novaMeta.getValorAlvo(), novaMeta.getPrazoFinal());
+            carregarMetas();
+            //gerenciador.getClienteLogado().adicionarMeta(novaMeta);
+            //Cliente cliente = gerenciador.getClienteLogado();
+            //metas.add(novaMeta);
+            //tabelaMetas.refresh();
+        }
+    }
+
+    private void abrirDialogoTransacaoParaMeta(Meta meta) {
+        MetasDialogo dialogo = new MetasDialogo();
+        Optional<Transacao> resultado = dialogo.showTransacaoDialogo(meta.getNome());
+
+        if (resultado.isPresent()) {
+            Transacao transacao = resultado.get();
+
+            if (transacao.getTipo() == TipoTransacao.ENTRADA) {
+                meta.adicionarValorAtual(transacao.getValor());
+            } else {
+                meta.removerValorAtual(transacao.getValor());
+            }
+
+            gerenciador.atualizarMeta(meta.getId(), meta.getNome(), meta.getValorAlvo(), transacao.getValor(), transacao.getData());
             tabelaMetas.refresh();
+            messageLabel.setText("Transação registrada para a meta: " + meta.getNome());
         }
     }
 }
