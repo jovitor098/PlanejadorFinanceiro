@@ -27,7 +27,11 @@
 
         <!-- Dica de interação -->
         <Label text="Dica: clique duas vezes em uma meta para atualizar seu saldo."
-               style="-fx-text-fill: #7f8c8d; -fx-font-style: italic;" />
+            style="-fx-text-fill: #2c3e50; -fx-font-size: 13px; -fx-font-weight: bold;" />
+
+
+
+
 
         <!-- Tabela de Metas -->
         <TableView fx:id="tabelaMetas" maxWidth="800" prefHeight="600" prefWidth="800">
