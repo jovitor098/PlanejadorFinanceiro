@@ -20,30 +20,36 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
+/**
+ * Controlador da tela de gerenciamento de metas financeiras.
+ * 
+ * Permite ao usuário visualizar, criar, excluir e adicionar transações a metas.
+ * As metas são exibidas em uma tabela, e é possível interagir com elas por meio
+ * de cliques ou botões para atualizar valores ou excluir metas existentes.
+ * 
+ * As operações são realizadas com base no cliente logado, acessado via {@link GerenciadorFinanceiro}.
+ * Cada meta pode ter transações associadas que atualizam seu valor atual.
+ */
 public class MetasController {
 
-    @FXML
-    private TableView<Meta> tabelaMetas;
-    @FXML
-    private TableColumn<Meta, String> colunaNome;
-    @FXML
-    private TableColumn<Meta, Double> colunaValorAlvo;
-    @FXML
-    private TableColumn<Meta, Double> colunaValorAtual;
-    @FXML
-    private TableColumn<Meta, Double> colunaProgresso;
-    @FXML
-    private TableColumn<Meta, String> colunaPrazo;
-    @FXML
-    private Button voltarButton;
-    @FXML
-    private Button novaMetaButton;
-    @FXML
-    private Label messageLabel;
+    @FXML private TableView<Meta> tabelaMetas;
+    @FXML private TableColumn<Meta, String> colunaNome;
+    @FXML private TableColumn<Meta, Double> colunaValorAlvo;
+    @FXML private TableColumn<Meta, Double> colunaValorAtual;
+    @FXML private TableColumn<Meta, Double> colunaProgresso;
+    @FXML private TableColumn<Meta, String> colunaPrazo;
+    @FXML private Button voltarButton;
+    @FXML private Button novaMetaButton;
+    @FXML private Label messageLabel;
 
     private GerenciadorFinanceiro gerenciador;
     private ObservableList<Meta> metas;
 
+    /**
+     * Inicializa os componentes da interface.
+     * Configura as colunas da tabela de metas e define o evento de clique duplo
+     * para adicionar transações a uma meta selecionada.
+     */
     @FXML
     private void initialize() {
         gerenciador = GerenciadorFinanceiro.getInstancia();
@@ -62,7 +68,6 @@ public class MetasController {
 
         carregarMetas();
 
-        // Evento de clique duplo na tabela, usado para atualizar o valor de uma meta
         tabelaMetas.setRowFactory(tv -> {
             TableRow<Meta> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -75,12 +80,19 @@ public class MetasController {
         });
     }
 
+    /**
+     * Carrega as metas do cliente logado e exibe na tabela.
+     */
     private void carregarMetas() {
         Cliente cliente = gerenciador.getClienteLogado();
         metas = FXCollections.observableArrayList(cliente.getMetas());
         tabelaMetas.setItems(metas);
     }
 
+    /**
+     * Ação executada ao clicar no botão "Voltar".
+     * Retorna à tela de perfil do cliente.
+     */
     @FXML
     private void handleVoltar() {
         try {
@@ -100,6 +112,10 @@ public class MetasController {
         }
     }
 
+    /**
+     * Ação executada ao clicar no botão "Nova Meta".
+     * Abre um diálogo para o usuário cadastrar uma nova meta.
+     */
     @FXML
     private void handleCriarMeta() {
         MetasDialogo dialogo = new MetasDialogo();
@@ -109,10 +125,13 @@ public class MetasController {
             Meta novaMeta = resultado.get();
             gerenciador.getClienteLogado().adicionarMeta(novaMeta);
             carregarMetas();
-
         }
     }
 
+    /**
+     * Ação executada ao clicar no botão "Excluir Meta".
+     * Remove a meta selecionada.
+     */
     @FXML
     private void handleExcluirMeta() {
         Meta metaSelecionada = tabelaMetas.getSelectionModel().getSelectedItem();
@@ -129,14 +148,18 @@ public class MetasController {
 
         Optional<ButtonType> resultado = confirmacao.showAndWait();
         if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
-            //gerenciador.getClienteLogado().removerMeta(metaSelecionada);
             gerenciador.removerMeta(metaSelecionada);
             carregarMetas();
             messageLabel.setText("Meta removida com sucesso.");
         }
     }
 
-
+    /**
+     * Abre o diálogo para registrar uma transação associada à meta informada.
+     * Atualiza o valor atual da meta e registra a transação no sistema.
+     * 
+     * @param meta A meta à qual a transação será associada.
+     */
     private void abrirDialogoTransacaoParaMeta(Meta meta) {
         MetasDialogo dialogo = new MetasDialogo();
         Optional<Transacao> resultado = dialogo.showTransacaoDialogo(meta.getNome());
@@ -158,6 +181,12 @@ public class MetasController {
         }
     }
 
+    /**
+     * Exibe um alerta com o título e mensagem fornecidos.
+     * 
+     * @param titulo   Título da janela de alerta.
+     * @param mensagem Mensagem a ser exibida.
+     */
     private void mostrarAlerta(String titulo, String mensagem) {
         Alert alerta = new Alert(Alert.AlertType.WARNING);
         alerta.setTitle(titulo);
@@ -166,5 +195,3 @@ public class MetasController {
         alerta.showAndWait();
     }
 }
-
-

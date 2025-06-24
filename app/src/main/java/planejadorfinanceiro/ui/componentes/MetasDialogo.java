@@ -11,7 +11,13 @@ import planejadorfinanceiro.model.Transacao;
 import java.time.LocalDate;
 import java.util.Optional;
 
-/** Caixa de diálogo personalizada para criar uma nova {@link Meta}. */
+/**
+ * Caixa de diálogo personalizada para criação de uma nova {@link Meta} ou adição de uma {@link Transacao}
+ * associada a uma meta existente.
+ * 
+ * Essa classe define a interface gráfica e lógica de validação dos dados de entrada fornecidos
+ * pelo usuário ao criar metas ou adicionar transações relacionadas a metas.
+ */
 public class MetasDialogo extends Dialog<Meta> {
 
     private TextField campoNome;
@@ -22,6 +28,10 @@ public class MetasDialogo extends Dialog<Meta> {
 
     private final ButtonType salvarButtonType = new ButtonType("Salvar", ButtonBar.ButtonData.OK_DONE);
 
+    /**
+     * Construtor da caixa de diálogo para criação de uma nova meta.
+     * Inicializa os campos de entrada, define estilos e configura a lógica do botão "Salvar".
+     */
     public MetasDialogo() {
         campoNome = new TextField();
         campoValorAlvo = new TextField();
@@ -44,6 +54,10 @@ public class MetasDialogo extends Dialog<Meta> {
         });
     }
 
+    /**
+     * Monta o layout da caixa de diálogo de criação de meta.
+     * Define os componentes, posicionamento e estilos dos botões.
+     */
     private void montarDialogo() {
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -79,6 +93,11 @@ public class MetasDialogo extends Dialog<Meta> {
         setTitle("Criar Nova Meta");
     }
 
+    /**
+     * Cria uma instância da classe {@link Meta} com base nos dados preenchidos na caixa de diálogo.
+     * 
+     * @return A nova meta criada ou {@code null} caso haja erro de validação.
+     */
     private Meta criarMetaDoDialogo() {
         try {
             String nome = campoNome.getText().trim();
@@ -102,6 +121,13 @@ public class MetasDialogo extends Dialog<Meta> {
         return null;
     }
 
+    /**
+     * Exibe uma caixa de diálogo para o usuário registrar uma nova {@link Transacao} relacionada a uma meta.
+     * Essa transação pode ser do tipo entrada ou saída e afeta o progresso da meta.
+     *
+     * @param nomeMeta O nome da meta à qual a transação está sendo vinculada.
+     * @return Um {@code Optional<Transacao>} contendo a transação criada, caso o usuário confirme.
+     */
     public Optional<Transacao> showTransacaoDialogo(String nomeMeta) {
         Dialog<Transacao> dialog = new Dialog<>();
         dialog.setTitle("Atualizar saldo da Meta: " + nomeMeta);
@@ -186,4 +212,3 @@ public class MetasDialogo extends Dialog<Meta> {
         return dialog.showAndWait();
     }
 }
-
