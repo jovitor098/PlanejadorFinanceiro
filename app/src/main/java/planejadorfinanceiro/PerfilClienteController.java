@@ -93,7 +93,7 @@ public class PerfilClienteController {
     }
     
     /**
-     * Ação excecutada ao clicar em 'voltar', retorna à tela de login.
+     * Ação executada ao clicar em 'voltar', retorna à tela de login.
      */
     @FXML
     private void handleVoltar() {
@@ -114,7 +114,7 @@ public class PerfilClienteController {
     }
 
     /**
-     * Ação excecutada ao clicar em 'Ver todas as transações', leva à tela com o 
+     * Ação executada ao clicar em 'Ver todas as transações', leva à tela com o 
      * histórico completo de transações do cliente.
      */
     @FXML
@@ -138,7 +138,7 @@ public class PerfilClienteController {
     }
 
     /** 
-     * Ação excecutada ao clicar no seletor, atualiza o gráfico com os dados do ano selecionado.
+     * Ação executada ao clicar no seletor, atualiza o gráfico com os dados do ano selecionado.
      */
     @FXML
     private void handleVerMetas() {
