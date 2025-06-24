@@ -107,14 +107,35 @@ public class MetasController {
 
         if (resultado.isPresent()) {
             Meta novaMeta = resultado.get();
-            gerenciador.criarMeta(novaMeta.getNome(), novaMeta.getValorAlvo(), novaMeta.getPrazoFinal());
+            gerenciador.getClienteLogado().adicionarMeta(novaMeta);
             carregarMetas();
-            //gerenciador.getClienteLogado().adicionarMeta(novaMeta);
-            //Cliente cliente = gerenciador.getClienteLogado();
-            //metas.add(novaMeta);
-            //tabelaMetas.refresh();
+
         }
     }
+
+    @FXML
+    private void handleExcluirMeta() {
+        Meta metaSelecionada = tabelaMetas.getSelectionModel().getSelectedItem();
+
+        if (metaSelecionada == null) {
+            mostrarAlerta("Nenhuma meta selecionada", "Por favor, selecione uma meta para excluir.");
+            return;
+        }
+
+        Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacao.setTitle("Confirmação de Exclusão");
+        confirmacao.setHeaderText("Tem certeza que deseja excluir a meta \"" + metaSelecionada.getNome() + "\"?");
+        confirmacao.setContentText("Esta ação não poderá ser desfeita.");
+
+        Optional<ButtonType> resultado = confirmacao.showAndWait();
+        if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
+            //gerenciador.getClienteLogado().removerMeta(metaSelecionada);
+            gerenciador.removerMeta(metaSelecionada);
+            carregarMetas();
+            messageLabel.setText("Meta removida com sucesso.");
+        }
+    }
+
 
     private void abrirDialogoTransacaoParaMeta(Meta meta) {
         MetasDialogo dialogo = new MetasDialogo();
@@ -125,14 +146,24 @@ public class MetasController {
 
             if (transacao.getTipo() == TipoTransacao.ENTRADA) {
                 meta.adicionarValorAtual(transacao.getValor());
+                gerenciador.criarTransacaoEntrada(transacao.getNome(), transacao.getValor(), transacao.getData());
             } else {
                 meta.removerValorAtual(transacao.getValor());
+                gerenciador.criarTransacaoSaida(transacao.getNome(), transacao.getValor(), transacao.getData());
             }
 
             gerenciador.atualizarMeta(meta.getId(), meta.getNome(), meta.getValorAlvo(), transacao.getValor(), transacao.getData());
             tabelaMetas.refresh();
             messageLabel.setText("Transação registrada para a meta: " + meta.getNome());
         }
+    }
+
+    private void mostrarAlerta(String titulo, String mensagem) {
+        Alert alerta = new Alert(Alert.AlertType.WARNING);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensagem);
+        alerta.showAndWait();
     }
 }
 

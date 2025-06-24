@@ -56,6 +56,11 @@
             <Button fx:id="novaMetaButton" text="Criar nova meta" onAction="#handleCriarMeta"
                     style="-fx-background-color: #85c1e9; -fx-text-fill: #2c3e50;
                            -fx-font-weight: bold; -fx-background-radius: 8;" />
+
+            
+            <Button fx:id="excluirMetaButton" text="Excluir meta" onAction="#handleExcluirMeta"
+                    style="-fx-background-color: #e74c3c; -fx-text-fill: white;
+                           -fx-font-weight: bold; -fx-background-radius: 8;" />
         </HBox>
     </VBox>
 </AnchorPane>

@@ -33,6 +33,9 @@ public class MetasDialogo extends Dialog<Meta> {
 
         montarDialogo();
 
+        getDialogPane().setPrefWidth(500);
+        getDialogPane().setPrefHeight(400);
+
         setResultConverter(dialogButton -> {
             if (dialogButton == salvarButtonType) {
                 return criarMetaDoDialogo();
@@ -101,7 +104,7 @@ public class MetasDialogo extends Dialog<Meta> {
 
     public Optional<Transacao> showTransacaoDialogo(String nomeMeta) {
         Dialog<Transacao> dialog = new Dialog<>();
-        dialog.setTitle("Adicionar Transação para a Meta: " + nomeMeta);
+        dialog.setTitle("Atualizar saldo da Meta: " + nomeMeta);
 
         TextField campoNome = new TextField();
         campoNome.setPromptText("Descrição da transação");
@@ -137,6 +140,9 @@ public class MetasDialogo extends Dialog<Meta> {
         grid.add(erroLabel, 0, 4, 2, 1);
 
         dialog.getDialogPane().setContent(grid);
+        dialog.getDialogPane().setPrefWidth(500);
+        dialog.getDialogPane().setPrefHeight(400);
+
         ButtonType salvarBtn = new ButtonType("Salvar", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(salvarBtn, ButtonType.CANCEL);
 
